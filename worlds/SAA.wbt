@@ -3,7 +3,9 @@ WorldInfo {
 }
 Viewpoint {
   orientation 0.2538980943510937 -0.937245165424633 -0.2389712484233938 4.751070885715738
-  position 17.774966298550613 15.576727981028663 15.300155285502413
+  position 17.286860453078088 15.822951210838527 17.418962213473563
+  follow "Annoy Drone"
+  followType "None"
 }
 TexturedBackground {
 }
@@ -14,7 +16,7 @@ AnnoyDrone {
   rotation 0.9999989117857199 0.001043206444413565 -0.001043143178200003 -1.570827471122847
 }
 Robot {
-  translation 6 9 16
+  translation 6 9 16.17
   children [
     Shape {
       appearance Appearance {
@@ -32,7 +34,30 @@ Robot {
     }
   ]
   name "AnnoyServer"
-  controller "AnnoyServer"
+  controller "Server"
+  controllerArgs "annoy"
+}
+Robot {
+  translation 6.1 9 14.58
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 0 0
+        }
+      }
+      geometry Box {
+        size 1 1 1
+      }
+    }
+    Receiver {
+    }
+    Emitter {
+    }
+  ]
+  name "SearchServer"
+  controller "Server"
+  controllerArgs "search"
 }
 Group {
   children [

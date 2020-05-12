@@ -39,13 +39,8 @@ public class AnnoyDrone {
     
     Emitter emitter = robot.getEmitter("emitter");
 
-    
     Camera cam = robot.getCamera("camera");
     cam.enable(timeStep);
-    
-    
-    
-   
     
     // Main loop:
     // - perform simulation steps until Webots is stopping the controller
