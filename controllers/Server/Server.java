@@ -1,16 +1,18 @@
-import com.cyberbotics.webots.controller.Robot;
+import com.cyberbotics.webots.controller.*;
 
 
 public class Server {
   static int MAX_ROBOTS_IN_SWARM = 10;
 
-
   public static void main(String[] args) {
     Robot robot = new Robot();
     int timeStep = (int) Math.round(robot.getBasicTimeStep());
     
+    Receiver receiver =  robot.getReceiver("receiver");
+    
     // Create Server Data
-    ServerData sd = new ServerData(robot, timeStep);
+    ServerData sd = new ServerData(robot, timeStep, robot.getEmitter("emitter"), receiver);
+    
     
     // Get Server Type
     String type = args[0];
@@ -29,16 +31,12 @@ public class Server {
         throw new IllegalArgumentException("Server Input Invalid");
     }
     
+    // Find Matching Drones
+    server.FindMatchedDrones(MAX_ROBOTS_IN_SWARM);
+    
     while (robot.step(timeStep) != -1) {
       server.Run();
-    };
-  }
-  
-  public static boolean[] GetMatchedDrones(int start, int end, String confirmation){
-    boolean[] confirmations = new boolean[end-start];
-    //TODO
-    return confirmations;
-  }
-  
+    }
+  }  
 }
 
