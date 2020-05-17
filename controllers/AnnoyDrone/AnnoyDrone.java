@@ -22,14 +22,12 @@ public class AnnoyDrone {
         Speaker speaker = robot.getSpeaker("speaker");
 
         Receiver receiver = robot.getReceiver("receiver");
-        receiver.enable(timeStep);
-
         Emitter emitter = robot.getEmitter("emitter");
 
         Camera cam = robot.getCamera("camera");
         cam.enable(timeStep);
 
-        DroneCommunicator dc = new DroneCommunicator(receiver, emitter, "annoy");
+        DroneCommunicator dc = new DroneCommunicator(receiver, emitter, "annoy", timeStep);
 
         // Main loop:
         // - perform simulation steps until Webots is stopping the controller

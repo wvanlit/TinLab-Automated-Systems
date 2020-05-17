@@ -1,4 +1,5 @@
-import com.cyberbotics.webots.controller.*;
+import com.cyberbotics.webots.controller.Emitter;
+import com.cyberbotics.webots.controller.Receiver;
 import exceptions.NoNewDataException;
 
 public class ServerCommunicator {
@@ -20,6 +21,11 @@ public class ServerCommunicator {
         receiver = sd.receiver;
 
         identifier = "[" + type + "]";
+
+        if (type.equals("search"))
+            receiver.setChannel(0);
+        else
+            receiver.setChannel(100);
     }
 
     public int[] GetMatchedDrones(int start, int end) {
@@ -31,43 +37,47 @@ public class ServerCommunicator {
             emitter.setChannel(i);
             emitter.send(question.getBytes());
 
-            System.out.println("Sending '" + question + "' to #" + emitter.getChannel());
+            // Wait for answers
+            serverData.robot.step(timeStep);
 
-            receiver.setChannel(i);
-
-            // Wait
-            serverData.robot.step(timeStep * 2);
-
-            try {
-                String data = receiveData(i);
-                System.out.println("Received '" + data + "' from " + i);
-                confirmations[i - start] = i;
-            } catch (NoNewDataException noNewDataException) {
-                continue;
+            // Get Answers
+            while (true) {
+                try {
+                    receiveData(); // Ignore result, as long as there is no exception there is something listening on this channel
+                    confirmations[i - start] = i;
+                } catch (NoNewDataException nnde) {
+                    break;
+                }
             }
         }
 
         return confirmations;
     }
 
-    private String previousString = "";
-
-    public String receiveData(int channel) throws NoNewDataException {
-        if (receiver.getQueueLength() > 0) {
-            String data = new String(receiver.getData());
-            if (!data.equals(previousString)) {
-                System.out.println("Received '" + data + "' from " + channel);
-                previousString = data;
-                return data;
+    public void HandleIncomingData() {
+        while (receiver.getQueueLength() > 0) {
+            //Do something with the data
+            try {
+                String data = receiveData();
+            } catch (NoNewDataException nnde) {
+                break;
             }
 
         }
-
-        throw new exceptions.NoNewDataException();
     }
 
-    public boolean isFrom(String data, int channel) {
-        return data.contains("[" + channel + "]");
+    public void SendRequests() {
+
+    }
+
+    public String receiveData() throws NoNewDataException {
+        if (receiver.getQueueLength() > 0) {
+            String data = new String(receiver.getData());
+            receiver.nextPacket();
+            return data;
+        }
+
+        throw new NoNewDataException();
     }
 }
 

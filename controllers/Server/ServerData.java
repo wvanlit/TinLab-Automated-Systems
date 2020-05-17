@@ -1,4 +1,6 @@
-import com.cyberbotics.webots.controller.*;
+import com.cyberbotics.webots.controller.Emitter;
+import com.cyberbotics.webots.controller.Receiver;
+import com.cyberbotics.webots.controller.Robot;
 
 public class ServerData {
     Robot robot;
@@ -14,6 +16,5 @@ public class ServerData {
         this.receiver = receiver;
 
         receiver.enable(timeStep);
-
     }
 }

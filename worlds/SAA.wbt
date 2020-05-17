@@ -4,7 +4,7 @@ WorldInfo {
 Viewpoint {
   orientation 0.45517452489074134 -0.7150026458086693 -0.5306480645183682 4.260902283562728
   position 10.404512743233413 32.138672832733974 6.437796389621086
-  follow "Annoy Drone"
+  follow "Annoy Drone 1"
   followType "None"
 }
 TexturedBackground {
@@ -12,30 +12,31 @@ TexturedBackground {
 TexturedBackgroundLight {
 }
 AnnoyDrone {
-  hidden position_0_0 1.0808383008496147e-08
-  hidden translation_16 0.0412774 -0.00469654 -0.00405862
-  hidden rotation_16 0 0 1 0
-  hidden position_16_0 -2.4425377871730366e-08
-  hidden translation_17 0.000625212 -0.00530346 -0.0207448
-  hidden rotation_17 0 -0.9999999999999999 0 2.9802322387695313e-08
-  hidden position_17_0 9.399826052886149e-09
-  hidden translation_18 0.00754686 0.0160388 -0.00586401
-  hidden rotation_18 1 0 0 0
-  translation -1.8228698741393212e-05 9.87054970127801 2.9299829878790935
-  rotation 0.9999989079985481 0.001045053011259561 -0.00104492387997266 -1.5707732127280247
+  hidden position_0_0 1.6318238673679066e-08
+  hidden position_16_0 -1.1903074966163421e-08
+  hidden position_17_0 1.419274294522867e-08
+  translation -1.8017458589619784e-05 9.870549684023985 2.929979750588443
+  rotation 0.999998910794764 0.0010436915002642621 -0.0010436078468492162 -1.5708133970148828
+  name "Annoy Drone 1"
+  channel 101
+}
+AnnoyDrone {
+  hidden position_0_0 -5.536047639697432e-09
+  hidden position_16_0 1.2398808789616305e-08
+  hidden position_17_0 -4.824322667381482e-09
+  translation 0.8499832908213347 9.870502288841358 3.029977206860755
+  rotation 0.9999988381111234 0.0010779467650972195 -0.0010778715947701376 -1.5708091568067324
+  name "Annoy Drone 2"
   channel 102
 }
 AnnoyDrone {
-  translation 0.849982 9.87211 3.02998
-  rotation 0.9999989079985481 0.001045053011259561 -0.00104492387997266 -1.5707732127280247
-  name "Annoy Drone(1)"
-  channel 105
-}
-AnnoyDrone {
-  translation 1.91998 9.87406 3.12998
-  rotation 0.9999989079985481 0.001045053011259561 -0.00104492387997266 -1.5707732127280247
-  name "Annoy Drone(2)"
-  channel 109
+  hidden position_0_0 -5.539405718384199e-09
+  hidden position_16_0 1.2405908818543139e-08
+  hidden position_17_0 4.8272742110650616e-09
+  translation 1.9199804011892192 9.870530441457008 3.129977164169704
+  rotation 0.9999988368827067 0.0010785165053665312 -0.0010784411812370287 -1.5708091626210625
+  name "Annoy Drone 3"
+  channel 103
 }
 Robot {
   translation 6 9 16.17
@@ -51,10 +52,10 @@ Robot {
       }
     }
     Receiver {
-      channel 109
+      channel 100
     }
     Emitter {
-      channel 109
+      channel 103
     }
   ]
   name "AnnoyServer"
@@ -75,7 +76,7 @@ Robot {
       }
     }
     Receiver {
-      channel 9
+      channel 100
     }
     Emitter {
       channel 9

@@ -1,6 +1,3 @@
-import com.cyberbotics.webots.controller.Robot;
-
-
 public class AnnoyServer implements IServer {
     ServerData server;
     ServerCommunicator communicator;
@@ -13,13 +10,17 @@ public class AnnoyServer implements IServer {
 
     public void FindMatchedDrones(int maximum) {
         DroneIDs = communicator.GetMatchedDrones(100, 100 + maximum);
-        for ( int id : DroneIDs) {
-            System.out.print(id+" ");
+        System.out.print("Drones connected to Annoy Server: ");
+        for (int id : DroneIDs) {
+            if (id != 0)
+                System.out.print(id + ", ");
         }
-        System.out.println("!");
+        System.out.println();
     }
 
     public void Run() {
+        communicator.HandleIncomingData();
 
+        communicator.SendRequests();
     }
 }

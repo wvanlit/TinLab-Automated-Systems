@@ -1,45 +1,51 @@
-import com.cyberbotics.webots.controller.Receiver;
 import com.cyberbotics.webots.controller.Emitter;
+import com.cyberbotics.webots.controller.Receiver;
 
 public class DroneCommunicator {
 
-    private String previousString;
     private final String type;
-
     Receiver receiver;
     Emitter emitter;
+    private String previousString;
 
-    String identifier;
-
-    public DroneCommunicator(Receiver rec, Emitter em, String type) {
+    public DroneCommunicator(Receiver rec, Emitter em, String type, int timeStep) {
         this.type = type;
         previousString = "";
 
         receiver = rec;
-        emitter = em;
+        receiver.enable(timeStep);
+        // Receiver's channel is set in the object properties
 
-        identifier = "[" + rec.getChannel() + "]";
+        emitter = em;
+        if (type.equals("search"))
+            emitter.setChannel(0);
+        else
+            emitter.setChannel(100);
     }
 
     public void HandleIncomingData() {
-        if (receiver.getQueueLength() <= 0) {
-            return;
+        while (receiver.getQueueLength() > 0) {
+
+            String data = new String(receiver.getData());
+
+            if (data.equals(previousString)) {
+                return;
+            } else {
+                previousString = data;
+            }
+
+            if (isFromServer(data)) {
+                data = trimIdentifier(data);
+            } else {
+                System.out.println("Data not [" + type + "]");
+            }
+
+            handleCommand(data);
+
         }
+    }
 
-        String data = new String(receiver.getData());
-
-        if (data.equals(previousString)) {
-            return;
-        } else {
-            previousString = data;
-        }
-
-        if (isFromServer(data)) {
-            data = trimIdentifier(data);
-        } else {
-            System.out.println("Data not [" + type + "]");
-        }
-
+    private void handleCommand(String data) {
         switch (data) {
             case "type":
                 sendToServer(type);
@@ -48,20 +54,17 @@ public class DroneCommunicator {
                 System.out.println("Unknown data received: '" + data + "'");
                 break;
         }
-
-
     }
 
-    public boolean isFromServer(String data) {
+    private boolean isFromServer(String data) {
         return data.contains("[" + type + "]");
     }
 
-    public String trimIdentifier(String data) {
+    private String trimIdentifier(String data) {
         return data.replace("[" + type + "]", "").trim();
     }
 
-    public void sendToServer(String data) {
-        emitter.send((identifier + " " + data).getBytes());
-        System.out.println("SENDING");
+    private void sendToServer(String data) {
+        emitter.send((receiver.getChannel() + "|" + data).getBytes());
     }
 }

@@ -1,6 +1,3 @@
-import com.cyberbotics.webots.controller.Robot;
-
-
 public class SearchServer implements IServer {
     ServerData server;
     ServerCommunicator communicator;
@@ -8,11 +5,17 @@ public class SearchServer implements IServer {
 
     public SearchServer(ServerData s) {
         server = s;
-        communicator = new ServerCommunicator(s, "annoy");
+        communicator = new ServerCommunicator(s, "search");
     }
 
     public void FindMatchedDrones(int maximum) {
-        //DroneIDs = Server.GetMatchedDrones(0, maximum);
+        DroneIDs = communicator.GetMatchedDrones(0, maximum);
+        System.out.print("Drones connected to Search Server: ");
+        for (int id : DroneIDs) {
+            if (id != 0)
+                System.out.print(id + ", ");
+        }
+        System.out.println();
     }
 
     public void Run() {
