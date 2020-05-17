@@ -1,3 +1,5 @@
+package communication.drones;
+
 public class SearchServer implements IServer {
     ServerData server;
     ServerCommunicator communicator;

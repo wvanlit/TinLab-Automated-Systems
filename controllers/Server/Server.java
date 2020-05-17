@@ -1,5 +1,9 @@
 import com.cyberbotics.webots.controller.Receiver;
 import com.cyberbotics.webots.controller.Robot;
+import communication.drones.AnnoyServer;
+import communication.drones.IServer;
+import communication.drones.SearchServer;
+import communication.drones.ServerData;
 
 
 public class Server {
