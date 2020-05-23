@@ -2,41 +2,14 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.45517452489074134 -0.7150026458086693 -0.5306480645183682 4.260902283562728
-  position 10.404512743233413 32.138672832733974 6.437796389621086
+  orientation 0.2924535247414334 -0.9094565785645295 -0.2955666888741211 4.641565023881815
+  position 8.097307020043058 12.14155948648033 16.074864745392162
   follow "Annoy Drone 1"
   followType "None"
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
-}
-AnnoyDrone {
-  hidden position_0_0 1.6318238673679066e-08
-  hidden position_16_0 -1.1903074966163421e-08
-  hidden position_17_0 1.419274294522867e-08
-  translation -1.8017458589619784e-05 9.870549684023985 2.929979750588443
-  rotation 0.999998910794764 0.0010436915002642621 -0.0010436078468492162 -1.5708133970148828
-  name "Annoy Drone 1"
-  channel 101
-}
-AnnoyDrone {
-  hidden position_0_0 -5.536047639697432e-09
-  hidden position_16_0 1.2398808789616305e-08
-  hidden position_17_0 -4.824322667381482e-09
-  translation 0.8499832908213347 9.870502288841358 3.029977206860755
-  rotation 0.9999988381111234 0.0010779467650972195 -0.0010778715947701376 -1.5708091568067324
-  name "Annoy Drone 2"
-  channel 102
-}
-AnnoyDrone {
-  hidden position_0_0 -5.539405718384199e-09
-  hidden position_16_0 1.2405908818543139e-08
-  hidden position_17_0 4.8272742110650616e-09
-  translation 1.9199804011892192 9.870530441457008 3.129977164169704
-  rotation 0.9999988368827067 0.0010785165053665312 -0.0010784411812370287 -1.5708091626210625
-  name "Annoy Drone 3"
-  channel 103
 }
 Robot {
   translation 6 9 16.17
@@ -55,12 +28,31 @@ Robot {
       channel 100
     }
     Emitter {
-      channel 103
+      channel 104
     }
   ]
   name "AnnoyServer"
   controller "Server"
+  controllerArgs "annoy 6001 6000"
+}
+Drone {
+  hidden position_0_0 -8.65608717651252e-09
+  hidden position_16_0 -4.145069611363838e-10
+  hidden position_17_0 -1.2884936504241822e-10
+  translation 4.40332 9.98661 16.0619
+  rotation 0.9998000983271313 0.019865801953737872 0.0022612602223876866 -1.5905453071795863
   controllerArgs "annoy"
+  channel 101
+}
+Drone {
+  hidden position_0_0 -5.546259451705282e-09
+  hidden position_16_0 -1.2451016218051336e-08
+  hidden position_17_0 -4.835198866619565e-09
+  translation 4.479212241688226 9.870549655917143 16.79742791370716
+  rotation 0.9997628741622356 0.016405812593594905 0.014319384065296677 -1.5710930387203454
+  name "Drone(2)"
+  controllerArgs "annoy"
+  channel 102
 }
 Robot {
   translation 6.1 9 14.58
@@ -76,15 +68,24 @@ Robot {
       }
     }
     Receiver {
-      channel 100
     }
     Emitter {
-      channel 9
+      channel 4
     }
   ]
   name "SearchServer"
   controller "Server"
+  controllerArgs "search 6000 6001"
+}
+Drone {
+  hidden position_0_0 2.3073234520737717e-09
+  hidden position_16_0 -5.457816829623246e-09
+  hidden position_17_0 2.009833714839957e-09
+  translation 4.169843500105031 9.87055887829218 14.609990472807048
+  rotation -0.9999987611326099 -0.0011166916744324543 0.0011093840408177898 1.5708202285588933
+  name "Drone(1)"
   controllerArgs "search"
+  channel 1
 }
 Group {
   children [

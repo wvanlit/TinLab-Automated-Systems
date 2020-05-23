@@ -1,9 +1,11 @@
 package communication.drones;
 
+import java.util.List;
+
 public class AnnoyServer implements IServer {
     ServerData server;
     ServerCommunicator communicator;
-    int[] DroneIDs;
+    List<Integer> DroneIDs;
 
     public AnnoyServer(ServerData s) {
         server = s;
@@ -14,15 +16,17 @@ public class AnnoyServer implements IServer {
         DroneIDs = communicator.GetMatchedDrones(100, 100 + maximum);
         System.out.print("Drones connected to Annoy Server: ");
         for (int id : DroneIDs) {
-            if (id != 0)
-                System.out.print(id + ", ");
+            System.out.print(id + ", ");
         }
-        System.out.println();
+        System.out.println(" Total Length: "+DroneIDs.size());
     }
 
     public void Run() {
         communicator.HandleIncomingData();
-
         communicator.SendRequests();
+    }
+
+    public List<Integer> GetMatchedDrones() {
+        return DroneIDs;
     }
 }

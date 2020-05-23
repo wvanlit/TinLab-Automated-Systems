@@ -4,6 +4,9 @@ import com.cyberbotics.webots.controller.Emitter;
 import com.cyberbotics.webots.controller.Receiver;
 import exceptions.NoNewDataException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ServerCommunicator {
 
     int timeStep;
@@ -30,9 +33,8 @@ public class ServerCommunicator {
             receiver.setChannel(100);
     }
 
-    public int[] GetMatchedDrones(int start, int end) {
-        int[] confirmations = new int[end - start];
-
+    public List<Integer> GetMatchedDrones(int start, int end) {
+        List<Integer> drones = new ArrayList<>();
         String question = identifier + " type";
         for (int i = start; i < end; i++) {
             // Send Request
@@ -40,20 +42,19 @@ public class ServerCommunicator {
             emitter.send(question.getBytes());
 
             // Wait for answers
-            serverData.robot.step(timeStep);
+            serverData.robot.step(timeStep*2);
 
             // Get Answers
             while (true) {
                 try {
                     receiveData(); // Ignore result, as long as there is no exception there is something listening on this channel
-                    confirmations[i - start] = i;
+                    drones.add(i);
                 } catch (NoNewDataException nnde) {
                     break;
                 }
             }
         }
-
-        return confirmations;
+        return drones;
     }
 
     public void HandleIncomingData() {
@@ -78,7 +79,6 @@ public class ServerCommunicator {
             receiver.nextPacket();
             return data;
         }
-
         throw new NoNewDataException();
     }
 }
