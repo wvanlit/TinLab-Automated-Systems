@@ -22,7 +22,7 @@ public class SearchServer implements IServer {
     }
 
     public void Run() {
-
+        communicator.HandleIncomingData();
     }
 
     public List<Integer> GetMatchedDrones() {

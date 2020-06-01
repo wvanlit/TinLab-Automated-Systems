@@ -1,5 +1,8 @@
 import com.cyberbotics.webots.controller.Emitter;
 import com.cyberbotics.webots.controller.Receiver;
+import commands.HoverCommand;
+import commands.ICommand;
+import commands.LocationCommand;
 
 public class DroneCommunicator {
 
@@ -40,20 +43,41 @@ public class DroneCommunicator {
                 System.out.println("Data not [" + type + "]");
             }
 
-            handleCommand(data);
+            String[] split = data.split("\\|");
+
+            handleCommand(split[0], split);
 
         }
     }
 
-    private void handleCommand(String data) {
-        switch (data) {
+    private ICommand handleCommand(String command, String[] parameters) {
+        switch (command) {
             case "type":
                 sendToServer(type);
-                break;
+                return null;
+            case "go_to_location":
+                // GO TO XYZ doubles
+                return new LocationCommand(Double.parseDouble(parameters[1]),Double.parseDouble(parameters[2]),Double.parseDouble(parameters[3]));
+            case "hover":
+                // True / False
+                return new HoverCommand(Boolean.parseBoolean(parameters[1]));
             default:
-                System.out.println("Unknown data received: '" + data + "'");
-                break;
+                System.out.println("Unknown command received: '" + command + "'");
+                return null;
         }
+    }
+
+
+    public void SendLocationToServer(double x, double y, double z){
+        sendToServer("location|"+x+"|"+y+"|"+z);
+    }
+
+    public void SendTargetReached(boolean b){
+        sendToServer("reached_target|"+b);
+    }
+
+    public void SendPersonFound(double x, double y, double z){
+        sendToServer("found_person|"+x+"|"+y+"|"+z);
     }
 
     private boolean isFromServer(String data) {

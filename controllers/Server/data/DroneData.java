@@ -12,6 +12,9 @@ public class DroneData {
         this.location = location;
         this.channel = channel;
         this.entityStatePdu = entityStatePdu;
+
+        this.entityStatePdu.getEntityID().setEntityID(channel);
+        this.entityStatePdu.setEntityLocation(location);
     }
 
     public void SetDroneLocation(Vector3Double location){

@@ -23,7 +23,6 @@ public class AnnoyServer implements IServer {
 
     public void Run() {
         communicator.HandleIncomingData();
-        communicator.SendRequests();
     }
 
     public List<Integer> GetMatchedDrones() {
