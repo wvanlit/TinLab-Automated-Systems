@@ -8,6 +8,6 @@ selectionDisabled: 0
 viewpointLocked: 0
 orthographicViewHeight: 1
 textFiles: 1 "controllers/Drone/Drone.java" "controllers/Server/Server.java"
-renderingDevicePerspectives: Drone(2):camera;1;0.675;0;0
 renderingDevicePerspectives: Drone(1):camera;1;0.675;0;0
 renderingDevicePerspectives: Drone:camera;1;0.675;0;0
+renderingDevicePerspectives: Drone(2):camera;1;0.675;0;0
