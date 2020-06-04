@@ -20,12 +20,12 @@ public class DisCommunicator {
     int[] destinationPorts;
     DatagramSocket receivingSocket;
     InetAddress address;
-    List<DroneData> droneDataList;
+
 
     public DisCommunicator(InetAddress addresses, int[] destinationPorts, int port, int timestep) throws IOException {
         this.destinationPorts = destinationPorts;
         this.address = addresses;
-        droneDataList = new ArrayList<>();
+
         try {
             receivingSocket = new DatagramSocket(port);
             receivingSocket.setSoTimeout(timestep/2);
@@ -36,7 +36,7 @@ public class DisCommunicator {
         }
     }
 
-    public void SetupEntities(List<Integer> drones) {
+    public void SetupEntities(List<Integer> drones, List<DroneData> droneDataList) {
         for (int droneId : drones) {
             droneDataList.add(
                     createDroneData(droneId, createEntityStatePdu(droneId))
@@ -44,19 +44,24 @@ public class DisCommunicator {
         }
     }
 
-    public void SetDroneLocation(Vector3Double location, int channel) {
-        for (DroneData drone : droneDataList) {
-            if (drone.channel != channel)
-                continue;
-            drone.SetDroneLocation(location);
-            break;
-        }
-    }
-
-    public void SendCurrentData(double currentTime) {
+    public void SendCurrentData(double currentTime, List<DroneData> droneDataList) {
         for (DroneData drone : droneDataList) {
             drone.entityStatePdu.setTimestamp((long) (currentTime * 1000));
             sendToEveryAddress(drone.entityStatePdu.marshal());
+        }
+    }
+
+    public void SendCurrentData(double currentTime, List<DroneData> droneDataList, List<Vector3Double> humanTargets) {
+        for (DroneData drone : droneDataList) {
+            drone.entityStatePdu.setTimestamp((long) (currentTime * 1000));
+            sendToEveryAddress(drone.entityStatePdu.marshal());
+        }
+
+        for (Vector3Double target : humanTargets){
+            EntityStatePdu entityStatePdu = createEntityStatePdu(200);
+            entityStatePdu.setForceId((short) 1);
+            entityStatePdu.setEntityLocation(target);
+            sendToEveryAddress(entityStatePdu.marshal());
         }
     }
 
@@ -109,6 +114,7 @@ public class DisCommunicator {
         // Create Base EntityStatePDU
         EntityStatePdu espdu = new EntityStatePdu();
         espdu.setExerciseID((short) 0);
+        espdu.setForceId((short) 0);
 
         // Create Base EntityID
         EntityID eid = espdu.getEntityID();

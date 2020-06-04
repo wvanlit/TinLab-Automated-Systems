@@ -4,6 +4,9 @@ import commands.HoverCommand;
 import commands.ICommand;
 import commands.LocationCommand;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DroneCommunicator {
 
     private final String type;
@@ -26,13 +29,14 @@ public class DroneCommunicator {
             emitter.setChannel(100);
     }
 
-    public void HandleIncomingData() {
+    public List<ICommand> HandleIncomingData() {
+        List<ICommand> commands = new ArrayList<>();
         while (receiver.getQueueLength() > 0) {
 
             String data = new String(receiver.getData());
 
             if (data.equals(previousString)) {
-                return;
+                break;
             } else {
                 previousString = data;
             }
@@ -45,9 +49,10 @@ public class DroneCommunicator {
 
             String[] split = data.split("\\|");
 
-            handleCommand(split[0], split);
+            commands.add(handleCommand(split[0], split));
 
         }
+        return commands;
     }
 
     private ICommand handleCommand(String command, String[] parameters) {

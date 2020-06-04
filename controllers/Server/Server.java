@@ -4,12 +4,14 @@ import communication.drones.IServer;
 import communication.drones.SearchServer;
 import communication.drones.ServerData;
 import communication.servers.DisCommunicator;
+import data.DroneData;
 import edu.nps.moves.dis7.EntityID;
 import edu.nps.moves.dis7.EntityStatePdu;
 import edu.nps.moves.dis7.Vector3Double;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,6 +35,8 @@ public class Server {
         // Find Matching Drones
         server.FindMatchedDrones(MAX_ROBOTS_IN_SWARM);
 
+
+
         // Setup DIS
         InetAddress addresses = InetAddress.getByName("127.0.0.1");
         int receivingPort = Integer.parseInt(args[1]);
@@ -40,41 +44,18 @@ public class Server {
         int[] ports = getPorts(args);
 
         DisCommunicator disCommunicator = new DisCommunicator(addresses, ports, receivingPort, timeStep);
-        disCommunicator.SetupEntities(server.GetMatchedDrones());
+        disCommunicator.SetupEntities(server.GetMatchedDrones(), server.GetDrones());
 
         while (robot.step(timeStep) != -1) {
-            server.Run();
+            server.Run(); // Get messages and handle them
 
-            dummyLocationGatheringFunc(type, server, disCommunicator);
-
-            disCommunicator.SendCurrentData(robot.getTime());
-
+            List<Vector3Double> humanTargets = new ArrayList<>();
+            disCommunicator.SendCurrentData(robot.getTime(), server.GetDrones(), humanTargets);
             // Wait for answers
             robot.step(timeStep);
 
             List<EntityStatePdu> pduList = disCommunicator.ReceiveData();
-
             printPduInformation(type, pduList);
-        }
-    }
-
-    private static void dummyLocationGatheringFunc(String type, IServer server, DisCommunicator disCommunicator) {
-        for (int channel : server.GetMatchedDrones()) {
-            Vector3Double vec = new Vector3Double();
-
-            switch (type) {
-                case "annoy":
-                    vec.setX(100);
-                    break;
-                case "search":
-                    vec.setX(1);
-                    break;
-            }
-
-            vec.setY(channel);
-            vec.setZ(channel * 2);
-
-            disCommunicator.SetDroneLocation(vec, channel);
         }
     }
 
