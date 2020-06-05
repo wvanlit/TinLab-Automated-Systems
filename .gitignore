@@ -25,3 +25,6 @@ hs_err_pid*
 # Intellij
 .idea/
 /TEMPFILES/
+
+# Weights are to large for github
+/YOLO/
