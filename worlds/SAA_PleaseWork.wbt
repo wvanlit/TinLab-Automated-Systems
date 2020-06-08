@@ -6,9 +6,8 @@ WorldInfo {
   }
 }
 Viewpoint {
-  orientation 0.6072906226068182 -0.7400546471611085 -0.28899345824615236 5.231302614003257
-  position 50.24418169312991 26.207526281363013 20.540581834804623
-  follow "Annoy Drone"
+  orientation 0.07696009967127077 -0.9287595189046525 -0.3626057074876049 3.5986683082998905
+  position 32.9640537127433 10.010695606426754 -9.139614871978763
 }
 Robot {
   translation 6 9 16.17
@@ -353,74 +352,15 @@ Pedestrian {
   name "pedestrian(10)"
   shirtColor 0.5 0.55 0.2
 }
-AnnoyDrone {
-  translation 26.585 0.15 2
-  rotation -0.996045022782538 0.025630000586235012 0.08507300194587479 1.53656
-  controller "FlightController"
-  controllerArgs "annoy"
+Drone {
+  translation 26.6 0.15 2
+  controllerArgs "search"
+  channel 1
   bodySlot [
     RobotisLds01 {
       translation -0.05 0 -0.07
       rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
       enablePhysics FALSE
-    }
-  ]
-  cameraSlot [
-    Display {
-      width 603
-      height 603
-    }
-    Camera {
-      width 603
-      height 603
-    }
-  ]
-}
-AnnoyDrone {
-  translation 26.585 0.15 -1.92484
-  rotation 1 0 0 -1.6269053071795865
-  name "Annoy Drone(1)"
-  controller "FlightController"
-  controllerArgs "annoy"
-  bodySlot [
-    RobotisLds01 {
-      translation -0.05 0 -0.07
-      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
-      enablePhysics FALSE
-    }
-  ]
-  cameraSlot [
-    Display {
-      width 603
-      height 603
-    }
-    Camera {
-      width 603
-      height 603
-    }
-  ]
-}
-AnnoyDrone {
-  translation 26.585 0.15 -5
-  rotation 1 0 0 -1.6269053071795865
-  name "Annoy Drone(2)"
-  controller "FlightController"
-  controllerArgs "annoy"
-  bodySlot [
-    RobotisLds01 {
-      translation -0.05 0 -0.07
-      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
-      enablePhysics FALSE
-    }
-  ]
-  cameraSlot [
-    Display {
-      width 603
-      height 603
-    }
-    Camera {
-      width 603
-      height 603
     }
   ]
 }

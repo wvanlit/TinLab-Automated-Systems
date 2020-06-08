@@ -27,4 +27,4 @@ hs_err_pid*
 /TEMPFILES/
 
 # Weights are to large for github
-/YOLO/
+controllers/Drone/YOLO/*

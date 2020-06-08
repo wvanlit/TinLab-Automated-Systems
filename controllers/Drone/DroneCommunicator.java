@@ -50,18 +50,25 @@ public class DroneCommunicator {
             String[] split = data.split("\\|");
 
             commands.add(handleCommand(split[0], split));
+            receiver.nextPacket();
 
         }
         return commands;
     }
 
     private ICommand handleCommand(String command, String[] parameters) {
+        System.out.println(command);
         switch (command) {
             case "type":
                 sendToServer(type);
                 return null;
-            case "go_to_location":
+            case "location":
                 // GO TO XYZ doubles
+                System.out.println("---");
+                for (String string : parameters) {
+                    System.out.println(string);
+                }
+                System.out.println("---");
                 return new LocationCommand(Double.parseDouble(parameters[1]),Double.parseDouble(parameters[2]),Double.parseDouble(parameters[3]));
             case "hover":
                 // True / False
@@ -82,6 +89,7 @@ public class DroneCommunicator {
     }
 
     public void SendPersonFound(double x, double y, double z){
+        System.out.println("found_person|"+x+"|"+y+"|"+z);
         sendToServer("found_person|"+x+"|"+y+"|"+z);
     }
 
