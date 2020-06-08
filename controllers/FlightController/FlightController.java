@@ -25,6 +25,7 @@ import com.cyberbotics.webots.controller.Gyro;
 import com.cyberbotics.webots.controller.Camera;
 import com.cyberbotics.webots.controller.ImageRef;
 import com.cyberbotics.webots.controller.Display;
+import com.cyberbotics.webots.controller.Emitter;
 import java.lang.Math.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class FlightController {
                                                                    // obtained from official site//
   public static String openCvLibPath = "C:\\OpenCV\\opencv\\build\\java\\x64\\opencv_java3410.dll";
   public static String cocoFilePath = "YOLO\\coco.txt";
-  public static int preferedCameraAngle = 10;
+  public static int preferedCameraAngle = -35;
   public static Vector<String> classes = new Vector<String>();
 
   public FlightController(Robot robot, int timeStep) {
@@ -131,6 +132,9 @@ public class FlightController {
     frontRightMotor = robot.getMotor("front right propeller");
     rearLeftMotor = robot.getMotor("rear left propeller");
     rearRightMotor = robot.getMotor("rear right propeller");
+
+    cameraMotor.setPosition(1.7);
+
     Motor[] motors = { frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor };
 
     for (Motor m : motors) {
@@ -177,7 +181,7 @@ public class FlightController {
       if (time % 0.5 < 0.01) {
         try {
 
-          // fc.DetectHumans(display, camera, fc);
+          fc.DetectHumans(display, camera, fc);
         } catch (Exception e) {
           // System.out.println("Nothing to detect "+ e);
         }
@@ -251,9 +255,10 @@ public class FlightController {
     Mat frame = new Mat(camera.getWidth(), camera.getHeight(), CvType.CV_8UC3); 
 
     ImageRef ir = display.imageNew(camera.getWidth(), camera.getHeight(), camera.getImage(), 5);
-    display.imageSave(ir, "image.png");
+    String imageName = "image"+Integer.toString(robot.getEmitter("emitter").getChannel())+".png";
+    display.imageSave(ir, imageName);
 
-    frame = Imgcodecs.imread("image.png");
+    frame = Imgcodecs.imread(imageName);
 
     Mat dst = new Mat();
     // OpenCV DNN supports models trained from various frameworks like Caffe and TensorFlow 
@@ -356,7 +361,7 @@ public class FlightController {
     }
     detectionCount++;
     // Save result to file
-    // Imgcodecs.imwrite("detected" + detectionCount + ".jpg", frame); 
+    Imgcodecs.imwrite("detected" + detectionCount + ".jpg", frame); 
     
 
     SendCoordinatesToServer(clsIds.size(), fc.gps);
@@ -527,11 +532,9 @@ public class FlightController {
     double dronePitch = Math.max(negBoundary, Math.min(posBoundary, distanceToTarget));
 
     // Rotating the camera to the best viewpoint
-    double clampedDronePitch = Math.max(0, Math.min(1.7, dronePitch));
     double dronePitchInRadians = dronePitch * (Math.PI / 180);
-
     double cameraPitch = -(preferedCameraAngle * (Math.PI / 180)) - dronePitchInRadians;
-    cameraMotor.setPosition(-cameraPitch);
+    cameraMotor.setPosition(cameraPitch);
 
     // Decision making based on if the drone still holds right trajectory
     // Rotating is done if target degree deviates to much from trajectory degree
@@ -701,7 +704,7 @@ public class FlightController {
       return new double[] { 4.0, 0.0 };
     } else {
       int obstacleDirection = turnObstacleDirectionsToInt(ahead, behind, left, right);
-      System.out.println(obstacleDirection);
+      // System.out.println(obstacleDirection);
       return objectAvoidanceMap.get(obstacleDirection);
     }
   }
