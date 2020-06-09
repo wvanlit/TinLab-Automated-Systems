@@ -26,6 +26,7 @@ import com.cyberbotics.webots.controller.Camera;
 import com.cyberbotics.webots.controller.ImageRef;
 import com.cyberbotics.webots.controller.Display;
 import com.cyberbotics.webots.controller.Emitter;
+import com.cyberbotics.webots.controller.Receiver;
 import java.lang.Math.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -160,7 +161,7 @@ public class FlightController {
     objectAvoidanceMap.put(turnObstacleDirectionsToInt(false, true, true, true), new double[]{0.0, 0.0}); // Ahead
     objectAvoidanceMap.put(turnObstacleDirectionsToInt(true, true, true, true), new double[]{-1.0, 0.0}); // Blocked
   }
-
+/*
   public static void main(String[] args) {
     Robot robot = new Robot();
     int tempTimeStep = (int) Math.round(robot.getBasicTimeStep());
@@ -181,7 +182,7 @@ public class FlightController {
       if (time % 0.5 < 0.01) {
         try {
 
-          fc.DetectHumans(display, camera, fc);
+          // fc.ReturnCoordsOfDetectedHumans(display, camera, fc);
         } catch (Exception e) {
           // System.out.println("Nothing to detect "+ e);
         }
@@ -202,7 +203,7 @@ public class FlightController {
          * drone if targetReached if (targetReached){ fc.ToggleHoverDrone(true);
          * fc.targetReached(); } else { fc.ToggleHoverDrone(false); }
          */
-        /* Test Set */
+        /* Test Set 
         if (!targetOne) {
           targetOne = fc.FlyDroneToLocation(45, 15, 30);
           // targetOne = true;
@@ -219,10 +220,11 @@ public class FlightController {
           targetThree = false;
           targetFour = false;
         }
-        // */
+        // 
       }
     }
   }
+  */
 
   public void initYolo() {
     // Load the openCV 3 dll //
@@ -250,12 +252,12 @@ public class FlightController {
     return names;
   }
 
-  public void DetectHumans(Display display, Camera camera, FlightController fc) {
+  public List<double[]> ReturnCoordsOfDetectedHumans(Display display, Camera camera, FlightController fc) {
     // define a matrix to extract and store pixel info from video//
     Mat frame = new Mat(camera.getWidth(), camera.getHeight(), CvType.CV_8UC3); 
 
     ImageRef ir = display.imageNew(camera.getWidth(), camera.getHeight(), camera.getImage(), 5);
-    String imageName = "image"+Integer.toString(robot.getEmitter("emitter").getChannel())+".png";
+    String imageName = "image"+Integer.toString(robot.getReceiver("receiver").getChannel())+".png";
     display.imageSave(ir, imageName);
 
     frame = Imgcodecs.imread(imageName);
@@ -278,11 +280,12 @@ public class FlightController {
     // Feed forward the model to get output //
     net.forward(result, outBlobNames); 
 
-    // Insert thresholding beyond which the model will DetectHumans objects//
+    // Insert thresholding beyond which the model will ReturnCoordsOfDetectedHumans objects//
     float confThreshold = 0.5f; 
     List<Integer> clsIds = new ArrayList<>();
     List<Float> confs = new ArrayList<>();
     List<Rect2d> rects = new ArrayList<>();
+    List<double[]> humanCoords = new ArrayList<>();
     for (int i = 0; i < result.size(); ++i) {
       // each row is a candidate detection, the 1st 4 numbers are
       // [center_x, center_y, width, height], followed by (N-4) class probabilities
@@ -317,24 +320,29 @@ public class FlightController {
               // System.out.println("distance= " + dis);
 
               int degrees = (int) getBearingInDegrees();
+              System.out.println("Degrees of drone: " + degrees);
               if (degrees > 175 && degrees < 182) {
                 double x = fc.gps.getValues()[0];
                 double newX = x - dis;
-                System.out.println("Coords from detectd humans: " + newX + " y =" + fc.gps.getValues()[2]);
+                System.out.println("Coords from detectd humans: " + newX + " z =" + fc.gps.getValues()[2]);
+                humanCoords.add(new double[] {newX, fc.gps.getValues()[2]});
               }
               if ((degrees > 355 && degrees < 360) || (degrees > 0 && degrees < 5)) {
+                humanCoords.add(new double[] {fc.gps.getValues()[0] + dis, fc.gps.getValues()[2]});
                 System.out
-                    .println("Coords from detectd humans: " + fc.gps.getValues()[0] + dis + " y =" + fc.gps.getValues()[2]);
+                    .println("Coords from detectd humans: " + fc.gps.getValues()[0] + dis + " z =" + fc.gps.getValues()[2]);
               }
 
               if (degrees > 85 && degrees < 95) {
+                humanCoords.add(new double[] {fc.gps.getValues()[0], fc.gps.getValues()[2]+dis});
                 System.out
-                    .println("Coords from detectd humans: " + fc.gps.getValues()[0] + " y =" + fc.gps.getValues()[2] + dis);
+                    .println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + fc.gps.getValues()[2] + dis);
               }
               if ((degrees > 265 && degrees < 275)) {
-                double y = fc.gps.getValues()[2];
-                double newY = y - dis;
-                System.out.println("Coords from detectd humans: " + fc.gps.getValues()[0] + " y =" + newY);
+                double z = fc.gps.getValues()[2];
+                double newZ = z - dis;
+                humanCoords.add(new double[] {fc.gps.getValues()[0], newZ});
+                System.out.println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + newZ);
               }
             }
           }
@@ -364,7 +372,8 @@ public class FlightController {
     Imgcodecs.imwrite("detected" + detectionCount + ".jpg", frame); 
     
 
-    SendCoordinatesToServer(clsIds.size(), fc.gps);
+    return humanCoords;
+    
     /*
      * Output conversion for webots
      * 
@@ -377,7 +386,7 @@ public class FlightController {
      */
   }
 
-  private static void SendCoordinatesToServer(int _bodyCount, GPS _gps) {
+  private void SendCoordinatesToServer(int _bodyCount, GPS _gps) {
     System.out.println("Coordinates: " + _gps.getValues()[0] + " - " + _gps.getValues()[1] + " - " + _gps.getValues()[2]);
     System.out.println(_bodyCount + " Persons detected");
   }
@@ -449,7 +458,7 @@ public class FlightController {
     return targetDegrees;
   }
 
-  private boolean FlyDroneToLocation(double targetX, double targetY, double targetZ) {
+  public boolean FlyDroneToLocation(double targetX, double targetY, double targetZ) {
     // sets start variables when flying
     boolean mustAccelerate = false;
 
@@ -601,7 +610,7 @@ public class FlightController {
     }
   }
 
-  private void FlyDrone(double rollDisturbance, double pitchDisturbance, double yawDisturbance) {
+  public void FlyDrone(double rollDisturbance, double pitchDisturbance, double yawDisturbance) {
     // Retrieve robot position using the sensors.
     double roll = imu.getRollPitchYaw()[0] + Math.PI / 2.0;
     double pitch = imu.getRollPitchYaw()[1];
@@ -629,7 +638,7 @@ public class FlightController {
 
   }
 
-  private void ToggleHoverDrone(boolean mustHover) {
+  public void ToggleHoverDrone(boolean mustHover) {
     if (mustHover) {
       if (!hover) {
         hover = true;
@@ -648,6 +657,10 @@ public class FlightController {
     } else {
       hover = false;
     }
+  }
+
+  public double[] getCurrentLocation(){
+    return gps.getValues();
   }
 
   private double getBearingInDegrees() {

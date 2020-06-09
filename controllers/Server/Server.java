@@ -55,7 +55,7 @@ public class Server {
             robot.step(timeStep);
 
             List<EntityStatePdu> pduList = disCommunicator.ReceiveData();
-            printPduInformation(type, pduList);
+            // printPduInformation(type, pduList);
         }
     }
 
