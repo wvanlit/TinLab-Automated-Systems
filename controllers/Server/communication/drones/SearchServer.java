@@ -24,6 +24,7 @@ public class SearchServer implements IServer {
     List<double[]> checkpoints;
     HashMap<Integer, Integer> currentCheckpoints;  
     List<Vector3Double> groupCoords;
+    List<Vector3Double> recentlyFoundGroupCoords;
     static int MAXGROUPSIZE = 3;
 
     public SearchServer(ServerData s) {
@@ -54,6 +55,7 @@ public class SearchServer implements IServer {
     }
 
     public void Run() {
+        recentlyFoundGroupCoords = new ArrayList<>();
         HashMap<Integer, List<Vector3Double>> personsFoundMap = new HashMap<>();
         List<ICommand> commandList = communicator.HandleIncomingData();
         for (ICommand command : commandList) {
@@ -95,7 +97,6 @@ public class SearchServer implements IServer {
             communicator.SendGoToLocation(drone.channel, checkpoint[0], checkpoint[1], checkpoint[2]);
         }
         for (Map.Entry<Integer, List<Vector3Double>> entry : personsFoundMap.entrySet()) {
-            System.out.print(entry.getKey()+" ");
             List<Vector3Double> listValue = entry.getValue();
             if (listValue.size() < MAXGROUPSIZE) {
                 continue;
@@ -113,9 +114,7 @@ public class SearchServer implements IServer {
             //check if coords already exist as a marked group
             boolean isDuplicate = false;
             for (Vector3Double vector : groupCoords) {
-                boolean xIsClose = coordIsClose(avgXCoord, vector.getX(), 0.75);
-                boolean zIsClose = coordIsClose(avgZCoord, vector.getZ(), 0.75);
-                if(xIsClose && zIsClose){
+                    if(coordsAreClose(avgXCoord, vector.getX(), avgZCoord, vector.getZ(), 10)){
                     isDuplicate = true;
                     break;
                 }
@@ -126,12 +125,13 @@ public class SearchServer implements IServer {
                 tempVec.setY(yCoord);
                 tempVec.setZ(avgZCoord);
                 groupCoords.add(tempVec);
+                recentlyFoundGroupCoords.add(tempVec);
             }
 		}
     }
-
-    public boolean coordIsClose(double v1, double v2, double threshHold){
-        return (Math.abs(v1 - v2) > threshHold);
+    public boolean coordsAreClose(double x1, double x2, double z1, double z2, double threshHold){
+        double distanceToTarget = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(z1 - z2, 2));
+        return distanceToTarget < threshHold;
     }
 
     public List<Integer> GetMatchedDrones() {
@@ -156,6 +156,9 @@ public class SearchServer implements IServer {
     }
 
     public List<Vector3Double> GetGroupCoords(){
-        return groupCoords;
+        // for (Vector3Double vec : groupCoords) {
+        //     System.out.println("X: " + vec.getX() + " Z: " + vec.getZ());
+        // }
+        return recentlyFoundGroupCoords;
     }
 }

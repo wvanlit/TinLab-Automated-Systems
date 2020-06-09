@@ -50,7 +50,7 @@ public class Server {
             server.Run(); // Get messages and handle them
 
             List<Vector3Double> humanTargets = new ArrayList<>();
-            if(type == "search"){
+            if(type.equals("search")){
                 humanTargets = server.GetGroupCoords();
             }
             disCommunicator.SendCurrentData(robot.getTime(), server.GetDrones(), humanTargets);

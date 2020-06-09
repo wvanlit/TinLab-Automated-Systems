@@ -56,8 +56,10 @@ public class Drone {
             if (time % 0.5 < 0.01) {
                 try {
                     // fc.ReturnCoordsOfDetectedHumans(display, cam, fc);
-                    for (double[] humanCoord : fc.ReturnCoordsOfDetectedHumans(display, cam, fc)) {
-                        dc.SendPersonFound(humanCoord[0], fc.getCurrentLocation()[1], humanCoord[1]);  
+                    if(type.equals("search")){
+                        for (double[] humanCoord : fc.ReturnCoordsOfDetectedHumans(display, cam, fc)) {
+                            dc.SendPersonFound(humanCoord[0], fc.getCurrentLocation()[1], humanCoord[1]);  
+                        }
                     }
                 } catch (Exception e) {
                 // System.out.println("Nothing to detect "+ e);
@@ -85,7 +87,6 @@ public class Drone {
                 switch (command.getType()) {
                     case HOVER:
                         HoverCommand hc = (HoverCommand) command;
-                        System.out.println(hc.isB());
                         mustHover = hc.isB();
                         break;
                     case LOCATION:
@@ -98,12 +99,13 @@ public class Drone {
             }
 
             // Enter here functions to send actuator commands, like:
-            if (!speaker.isSpeaking())
+            if (!speaker.isSpeaking() && type.equals("annoy"))
                 speaker.speak("Fuck off and go home, you bloody idiots", 0.1);
 
             drone.doSomething(); // Example function
             double[] currentLocation = fc.getCurrentLocation();
             dc.SendLocationToServer(currentLocation[0], currentLocation[1], currentLocation[2]); // TODO Make this work plz, thank you
+                                                                                                 // You're welcome
 
         }
 

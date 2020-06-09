@@ -324,25 +324,25 @@ public class FlightController {
               if (degrees > 175 && degrees < 182) {
                 double x = fc.gps.getValues()[0];
                 double newX = x - dis;
-                System.out.println("Coords from detectd humans: " + newX + " z =" + fc.gps.getValues()[2]);
+                // System.out.println("Coords from detectd humans: " + newX + " z =" + fc.gps.getValues()[2]);
                 humanCoords.add(new double[] {newX, fc.gps.getValues()[2]});
               }
               if ((degrees > 355 && degrees < 360) || (degrees > 0 && degrees < 5)) {
                 humanCoords.add(new double[] {fc.gps.getValues()[0] + dis, fc.gps.getValues()[2]});
-                System.out
-                    .println("Coords from detectd humans: " + (fc.gps.getValues()[0] + dis) + " z =" + fc.gps.getValues()[2]);
+                // System.out
+                    // .println("Coords from detectd humans: " + (fc.gps.getValues()[0] + dis) + " z =" + fc.gps.getValues()[2]);
               }
 
               if (degrees > 85 && degrees < 95) {
                 humanCoords.add(new double[] {fc.gps.getValues()[0], fc.gps.getValues()[2]+dis});
-                System.out
-                    .println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + (fc.gps.getValues()[2] + dis));
+                // System.out
+                    // .println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + (fc.gps.getValues()[2] + dis));
               }
               if ((degrees > 265 && degrees < 275)) {
                 double z = fc.gps.getValues()[2];
                 double newZ = z - dis;
                 humanCoords.add(new double[] {fc.gps.getValues()[0], newZ});
-                System.out.println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + newZ);
+                // System.out.println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + newZ);
               }
             }
           }
@@ -369,7 +369,7 @@ public class FlightController {
     }
     detectionCount++;
     // Save result to file
-    Imgcodecs.imwrite("detected" + detectionCount + ".jpg", frame); 
+    // Imgcodecs.imwrite("detected" + detectionCount + ".jpg", frame); 
     
 
     return humanCoords;

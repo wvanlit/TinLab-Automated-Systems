@@ -61,6 +61,7 @@ public class DisCommunicator {
             EntityStatePdu entityStatePdu = createEntityStatePdu(200);
             entityStatePdu.setForceId((short) 1);
             entityStatePdu.setEntityLocation(target);
+            entityStatePdu.setTimestamp((long) (currentTime * 1000));
             sendToEveryAddress(entityStatePdu.marshal());
         }
     }
