@@ -36,12 +36,8 @@ public class DroneCommunicator {
             String data = new String(receiver.getData());
             // System.out.println(data);
 
-            data = trimIdentifier(data);
-            // if (isFromServer(data)) {
-            //     data = trimIdentifier(data);
-            // } else {
-            //     System.out.println("Data not [" + type + "]: " + data);
-            // }
+            if (isFromServer(data))
+                data = trimIdentifier(data);
 
             String[] split = data.split("\\|");
 
@@ -60,6 +56,11 @@ public class DroneCommunicator {
                 return null;
             case "location":
                 // GO TO XYZ doubles
+                System.out.println("---");
+                for (String string : parameters) {
+                    System.out.println(string);
+                }
+                System.out.println("---");
                 return new LocationCommand(Double.parseDouble(parameters[1]),Double.parseDouble(parameters[2]),Double.parseDouble(parameters[3]));
             case "hover":
                 // True / False
