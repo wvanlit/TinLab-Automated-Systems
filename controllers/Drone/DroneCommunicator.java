@@ -34,33 +34,27 @@ public class DroneCommunicator {
         while (receiver.getQueueLength() > 0) {
 
             String data = new String(receiver.getData());
+            // System.out.println(data);
 
-            if (data.equals(previousString)) {
-                break;
-            } else {
-                previousString = data;
-            }
-
-            if (isFromServer(data)) {
+            if (isFromServer(data))
                 data = trimIdentifier(data);
-            } else {
-                System.out.println("Data not [" + type + "]");
-            }
 
             String[] split = data.split("\\|");
 
             commands.add(handleCommand(split[0], split));
+            receiver.nextPacket();
 
         }
         return commands;
     }
 
     private ICommand handleCommand(String command, String[] parameters) {
+        // System.out.println(command);
         switch (command) {
             case "type":
                 sendToServer(type);
                 return null;
-            case "go_to_location":
+            case "location":
                 // GO TO XYZ doubles
                 return new LocationCommand(Double.parseDouble(parameters[1]),Double.parseDouble(parameters[2]),Double.parseDouble(parameters[3]));
             case "hover":

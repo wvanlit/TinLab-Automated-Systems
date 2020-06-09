@@ -53,8 +53,9 @@ public class ServerCommunicator {
             // Get Answers
             while (receiver.getQueueLength() > 0) {
                 try {
-                    receiveData(); // Ignore result, as long as there is no exception there is something listening on this channel
-                    drones.add(i);
+                    // Ignore result, as long as there is no exception there is something listening on this channel
+                    if( receiveData().contains(type))
+                        drones.add(i);
                 } catch (NoNewDataException nnde) {
                     break;
                 }
@@ -80,6 +81,7 @@ public class ServerCommunicator {
     public void SendGoToLocation(int channel, double x, double y, double z){
         emitter.setChannel(channel);
         String s = "location|"+x+"|"+y+"|"+z;
+        // System.out.println(s);
         emitter.send(s.getBytes());
     }
 

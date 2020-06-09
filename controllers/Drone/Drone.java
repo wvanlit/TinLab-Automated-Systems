@@ -11,8 +11,10 @@ public class Drone {
 
         // create the Robot instance.
         Robot robot = new Robot();
-
         int timeStep = (int) Math.round(robot.getBasicTimeStep());
+
+        FlightController fc = new FlightController(robot, timeStep);
+        fc.initYolo();
 
         // Get Devices
         Speaker speaker = robot.getSpeaker("speaker");
@@ -22,6 +24,13 @@ public class Drone {
 
         Camera cam = robot.getCamera("camera");
         cam.enable(timeStep);
+
+        Display display = robot.getDisplay("display");
+        display.attachCamera(cam);
+
+        //Targets
+        LocationCommand lc = null;
+        boolean mustHover = false;
 
         // Get type
         String type = args[0];
@@ -42,6 +51,32 @@ public class Drone {
         // Main loop:
         // - perform simulation steps until Webots is stopping the controller
         while (robot.step(timeStep) != -1) {
+            double time = robot.getTime(); // In seconds
+
+            if (time % 0.5 < 0.01) {
+                try {
+                    // fc.ReturnCoordsOfDetectedHumans(display, cam, fc);
+                    if(type.equals("search")){
+                        for (double[] humanCoord : fc.ReturnCoordsOfDetectedHumans(display, cam, fc)) {
+                            dc.SendPersonFound(humanCoord[0], fc.getCurrentLocation()[1], humanCoord[1]);  
+                        }
+                    }
+                } catch (Exception e) {
+                // System.out.println("Nothing to detect "+ e);
+                }
+            }
+            if (time < 5) {
+                fc.FlyDrone(0, 0, 0);
+            } else if (lc != null && !mustHover){
+                // System.out.print("Coords: ");
+                // System.out.print(lc.getX());
+                // System.out.print("   ");
+                // System.out.println(lc.getZ());
+                fc.FlyDroneToLocation(lc.getX(), lc.getY(), lc.getZ());
+            } else {
+                fc.ToggleHoverDrone(mustHover);
+            }
+            
             List<ICommand> commandList = dc.HandleIncomingData();
 
             // Commands can be in any order
@@ -52,13 +87,11 @@ public class Drone {
                 switch (command.getType()) {
                     case HOVER:
                         HoverCommand hc = (HoverCommand) command;
-                        System.out.println(hc.isB());
-                        // Hover or something
+                        mustHover = hc.isB();
                         break;
                     case LOCATION:
-                        LocationCommand lc = (LocationCommand) command;
-                        System.out.println(lc.getX() + " " +  lc.getY() + " " + lc.getZ());
-                        // Go to location
+                        lc = (LocationCommand) command;
+                        // System.out.println(lc.getX() + " " +  lc.getY() + " " + lc.getZ());
                         break;
                     default:
                         throw new IllegalArgumentException();
@@ -66,12 +99,14 @@ public class Drone {
             }
 
             // Enter here functions to send actuator commands, like:
-            if (!speaker.isSpeaking())
+            if (!speaker.isSpeaking() && type.equals("annoy"))
                 speaker.speak("Fuck off and go home, you bloody idiots", 0.1);
 
             drone.doSomething(); // Example function
+            double[] currentLocation = fc.getCurrentLocation();
+            dc.SendLocationToServer(currentLocation[0], currentLocation[1], currentLocation[2]); // TODO Make this work plz, thank you
+                                                                                                 // You're welcome
 
-            dc.SendLocationToServer(0, 1, 2); // TODO Make this work plz, thank you
         }
 
         // Enter here exit cleanup code.

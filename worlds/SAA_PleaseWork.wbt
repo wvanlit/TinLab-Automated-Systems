@@ -1,0 +1,366 @@
+#VRML_SIM R2020a utf8
+WorldInfo {
+  defaultDamping Damping {
+    linear 0.5
+    angular 0.5
+  }
+}
+Viewpoint {
+  orientation 0.011766366548822207 0.9920277721346903 -0.12546892815243862 3.1500816593558736
+  position 18.968574585782296 16.95536373721326 10.14227233883149
+  follow "Drone"
+  followType "Mounted Shot"
+}
+Robot {
+  translation 6 9 16.17
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0 1 0
+        }
+      }
+      geometry Box {
+        size 1 1 1
+      }
+    }
+    Receiver {
+      channel 100
+    }
+    Emitter {
+      channel 103
+    }
+  ]
+  name "AnnoyServer"
+  controller "Server"
+  controllerArgs "annoy 6001 6000"
+}
+Robot {
+  translation 6.1 9 14.58
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 0 0
+        }
+      }
+      geometry Box {
+        size 1 1 1
+      }
+    }
+    Receiver {
+    }
+    Emitter {
+      channel 1
+    }
+  ]
+  name "SearchServer"
+  controller "Server"
+  controllerArgs "search 6000 6001"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+  castShadows FALSE
+}
+Group {
+  children [
+    BigSassafras {
+      translation 28.21 0 -13.78
+    }
+    BigSassafras {
+      translation 43.44 0 -9.06
+      name "sassafras tree(8)"
+    }
+    BigSassafras {
+      translation 28.21 0 9.65
+      name "sassafras tree(1)"
+    }
+    BigSassafras {
+      translation 28.21 0 19.88
+      name "sassafras tree(3)"
+    }
+    BigSassafras {
+      translation 34.44 0 -1.77
+      name "sassafras tree(7)"
+    }
+    BigSassafras {
+      translation 47.18 0 20.78
+      name "sassafras tree(4)"
+    }
+    BigSassafras {
+      translation 45.68 0 3.49
+      name "sassafras tree(5)"
+    }
+    BigSassafras {
+      translation 28.21 0 -28
+      name "sassafras tree(6)"
+    }
+    BigSassafras {
+      translation 45.4 0 -28
+      name "sassafras tree(9)"
+    }
+    BigSassafras {
+      translation 45.4 0 -19.33
+      name "sassafras tree(10)"
+    }
+    BigSassafras {
+      translation 35.38 0 -19.33
+      name "sassafras tree(11)"
+    }
+    UBuilding {
+      translation -29.07 -12.87 -11.0399
+      rotation 0 -1 0 -5.307179586466759e-06
+    }
+    SimpleTwoFloorsHouse {
+      translation -22.84 0 16.16
+    }
+    LargeResidentialTower {
+      translation 4.22 0 -9.44002
+      rotation 0 1 0 -1.5707953071795862
+      name "residential tower(2)"
+    }
+    ResidentialTower {
+      translation 32.96 0 40.03
+      name "residential tower(1)"
+    }
+    ModernSuburbanHouse {
+      translation 2.02 0 -28.62
+    }
+    SmallResidentialTower {
+      translation 26 0 39
+    }
+    RoadIntersection {
+      translation 17 0.2 30
+      rotation 0 1 0 0.78539
+      roadsWidth 10
+      startRoadBorderHeight 0.2
+      startRoadBorderWidth 1
+    }
+    RoadIntersection {
+      translation 17 0.2 -40
+      rotation 0 1 0 0.78539
+      name "road intersection(1)"
+      roadsWidth 10
+      startRoadBorderHeight 0.2
+      startRoadBorderWidth 1
+    }
+    StraightRoadSegment {
+      translation -50 0.2 30
+      rotation 0 1 0 1.5707
+      width 10
+      roadBorderHeight 0.2
+      startingRoadBorderWidth 1
+      endingRoadBorderWidth 1
+      length 57
+    }
+    StraightRoadSegment {
+      translation -50 0.2 -40
+      rotation 0 1 0 1.5707
+      name "road(2)"
+      width 10
+      roadBorderHeight 0.2
+      startingRoadBorderWidth 1
+      endingRoadBorderWidth 1
+      length 57
+    }
+    StraightRoadSegment {
+      translation 27 0.2 -40
+      rotation 0 1 0 1.5707
+      name "road(3)"
+      width 10
+      roadBorderHeight 0.2
+      startingRoadBorderWidth 1
+      endingRoadBorderWidth 1
+      length 23
+    }
+    StraightRoadSegment {
+      translation 27 0.2 30
+      rotation 0 1 0 1.5707
+      name "road(4)"
+      width 10
+      roadBorderHeight 0.2
+      startingRoadBorderWidth 1
+      endingRoadBorderWidth 1
+      length 23
+    }
+    StraightRoadSegment {
+      translation 17 0.2 -30
+      name "road(1)"
+      width 10
+      roadBorderHeight 0.2
+      startingRoadBorderWidth 1
+      endingRoadBorderWidth 1
+      length 50
+    }
+    StraightRoadSegment {
+      translation 17 0.2 40
+      name "road(5)"
+      width 10
+      roadBorderHeight 0.2
+      startingRoadBorderWidth 1
+      endingRoadBorderWidth 1
+    }
+    ModernHouse {
+      translation 2.2 0 15.76
+    }
+    ResidentialBuilding {
+      translation -21.36 -0.55 42.94
+    }
+    UnevenTerrain {
+      translation 0 -10 0
+      size 100 10 100
+      textureScale 100 100
+      randomSeed 2
+      perlinNOctaves 0
+    }
+  ]
+}
+Group {
+}
+Pedestrian {
+  translation 19.0301 17.4684 11.7171
+  rotation -1 9.94356e-07 -4.11874e-07 -0.7854053071795866
+  name "pedestrian(1)"
+  shirtColor 1 0.55 0.2
+}
+Pedestrian {
+  translation 9.71 1.65 24.46
+  rotation 0 -1 0 -1.5707953071795862
+  name "pedestrian(2)"
+  shirtColor 0 0.4 0.2
+}
+Pedestrian {
+  translation 12.2599 1.65 22.9532
+  rotation -1.91796e-08 1 -7.15791e-08 -0.523595307179586
+  name "pedestrian(3)"
+  shirtColor 0.6 0.1 0.2
+}
+Pedestrian {
+  translation 12.4274 1.65 25.345
+  rotation 1.91794e-08 -1 7.94437e-09 2.35619
+  name "pedestrian(4)"
+  shirtColor 0.5 0.8 0.2
+}
+Pedestrian {
+  translation 11.3756 1.65 24.2932
+  rotation -1.91793e-08 1 3.32195e-08 1.0472
+  name "pedestrian(5)"
+  shirtColor 0.2 0.55 0.5
+}
+Pedestrian {
+  translation 22.61 1.65 -0.01
+}
+Pedestrian {
+  translation 22.71 1.44 -39.87
+  name "pedestrian(14)"
+  shirtColor 1 1 0.2
+}
+Pedestrian {
+  translation 23.22 1.46 -40.8
+  name "pedestrian(15)"
+  shirtColor 0 0 0.2
+}
+Pedestrian {
+  translation 23.48 1.42 -39.09
+  name "pedestrian(16)"
+  shirtColor 1 1 1
+}
+Pedestrian {
+  translation 23.21 1.43 -38.11
+  name "pedestrian(17)"
+  shirtColor 1 0 1
+}
+Pedestrian {
+  translation 21.9 1.46 -39.28
+  name "pedestrian(18)"
+  shirtColor 0.25 0.4 0
+}
+Pedestrian {
+  translation -11.2895 1.61891 -34.9936
+  rotation -0.017181591479405546 0.9912985084010358 -0.1305069352797632 -2.8820453071795864
+  name "pedestrian(23)"
+  shirtColor 0 0 0
+  pantsColor 0 0 0
+}
+Pedestrian {
+  translation 14.19 1.65 -13.28
+  rotation 0 1 0 -1.5707953071795862
+  name "pedestrian(6)"
+  shirtColor 1 0.55 1
+}
+Pedestrian {
+  translation -25.01 1.65 24.2
+  rotation 0 1 0 1.01503e-06
+  name "pedestrian(11)"
+  shirtColor 1 0.55 1
+}
+Pedestrian {
+  translation -24.37 1.65 24.77
+  rotation 0 1 0 -2.3561953071795863
+  name "pedestrian(12)"
+  shirtColor 1 0.55 1
+}
+Pedestrian {
+  translation -25.57 1.65 24.75
+  rotation 0 1 0 1.309
+  name "pedestrian(13)"
+  shirtColor 1 0.55 1
+}
+Pedestrian {
+  translation 34.37 1.65 35.22
+  rotation 0 1 0 -1.5707953071795862
+  name "pedestrian(7)"
+  shirtColor 0.8 0.2 0.2
+}
+Drone {
+  translation 26.6 0.15 2
+  controllerArgs "search"
+  channel 1
+  bodySlot [
+    RobotisLds01 {
+      translation -0.05 0 -0.07
+      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
+      enablePhysics FALSE
+    }
+  ]
+}
+Drone {
+  translation 26.7 0.15 -1
+  name "Drone(1)"
+  controllerArgs "annoy"
+  channel 101
+  bodySlot [
+    RobotisLds01 {
+      translation -0.05 0 -0.07
+      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
+      enablePhysics FALSE
+    }
+  ]
+}
+Drone {
+  translation 26.8 0.15 -3
+  name "Drone(2)"
+  controllerArgs "annoy"
+  channel 102
+  bodySlot [
+    RobotisLds01 {
+      translation -0.05 0 -0.07
+      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
+      enablePhysics FALSE
+    }
+  ]
+}
+Drone {
+  translation 26.9 0.15 -6
+  name "Drone(3)"
+  controllerArgs "annoy"
+  channel 103
+  bodySlot [
+    RobotisLds01 {
+      translation -0.05 0 -0.07
+      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
+      enablePhysics FALSE
+    }
+  ]
+}
