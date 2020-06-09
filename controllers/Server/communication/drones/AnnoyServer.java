@@ -6,6 +6,8 @@ import communication.command.PersonFoundCommand;
 import communication.command.ReachedTargetCommand;
 import data.DroneData;
 import edu.nps.moves.dis7.Vector3Double;
+import edu.nps.moves.dis7.EntityStatePdu;
+import edu.nps.moves.dis7.EntityID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,5 +69,26 @@ public class AnnoyServer implements IServer {
             drone.SetDroneLocation(location);
             break;
         }
+    }
+
+    public void HandleDisData(EntityStatePdu[] list){
+        printPduInformation(list);
+    }
+
+    private void printPduInformation(EntityStatePdu[] pduList) {
+        for (EntityStatePdu esp: pduList) {
+            // Do something with the gathered data
+            EntityID entityID = esp.getEntityID();
+            System.out.println("Timestamp:" + esp.getTimestamp());
+            System.out.println("ID:" + entityID.getEntityID());
+            System.out.println("Force:" + esp.getForceId());
+            Vector3Double vec = esp.getEntityLocation();
+            System.out.println("Location: "+vec.getX()+" "+vec.getY()+" "+vec.getZ());
+            System.out.println("");
+        }
+    }
+
+    public List<Vector3Double> GetGroupCoords(){
+        return null;
     }
 }

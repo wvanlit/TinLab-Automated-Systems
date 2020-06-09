@@ -56,11 +56,6 @@ public class DroneCommunicator {
                 return null;
             case "location":
                 // GO TO XYZ doubles
-                System.out.println("---");
-                for (String string : parameters) {
-                    System.out.println(string);
-                }
-                System.out.println("---");
                 return new LocationCommand(Double.parseDouble(parameters[1]),Double.parseDouble(parameters[2]),Double.parseDouble(parameters[3]));
             case "hover":
                 // True / False
@@ -81,7 +76,6 @@ public class DroneCommunicator {
     }
 
     public void SendPersonFound(double x, double y, double z){
-        System.out.println("found_person|"+x+"|"+y+"|"+z);
         sendToServer("found_person|"+x+"|"+y+"|"+z);
     }
 

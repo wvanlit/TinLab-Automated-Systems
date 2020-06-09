@@ -50,26 +50,18 @@ public class Server {
             server.Run(); // Get messages and handle them
 
             List<Vector3Double> humanTargets = new ArrayList<>();
+            if(type == "search"){
+                humanTargets = server.GetGroupCoords();
+            }
             disCommunicator.SendCurrentData(robot.getTime(), server.GetDrones(), humanTargets);
             // Wait for answers
             robot.step(timeStep);
 
             List<EntityStatePdu> pduList = disCommunicator.ReceiveData();
+            EntityStatePdu[] pduArray = new EntityStatePdu[pduList.size()];
+            pduArray = pduList.toArray(pduArray);
+            server.HandleDisData(pduArray);
             // printPduInformation(type, pduList);
-        }
-    }
-
-    private static void printPduInformation(String type, List<EntityStatePdu> pduList) {
-        System.out.println("=== Server " + type + " ===");
-        for (EntityStatePdu esp: pduList) {
-            // Do something with the gathered data
-            EntityID entityID = esp.getEntityID();
-            System.out.println("Timestamp:" + esp.getTimestamp());
-            System.out.println("ID:" + entityID.getEntityID());
-            System.out.println("Force:" + esp.getForceId());
-            Vector3Double vec = esp.getEntityLocation();
-            System.out.println("Location: "+vec.getX()+" "+vec.getY()+" "+vec.getZ());
-            System.out.println("");
         }
     }
 

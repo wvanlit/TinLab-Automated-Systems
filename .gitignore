@@ -28,3 +28,4 @@ hs_err_pid*
 
 # Weights are to large for github
 controllers/Drone/YOLO/*
+*.png

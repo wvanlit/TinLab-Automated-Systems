@@ -320,7 +320,7 @@ public class FlightController {
               // System.out.println("distance= " + dis);
 
               int degrees = (int) getBearingInDegrees();
-              System.out.println("Degrees of drone: " + degrees);
+              // System.out.println("Degrees Drone: " + degrees);
               if (degrees > 175 && degrees < 182) {
                 double x = fc.gps.getValues()[0];
                 double newX = x - dis;
@@ -330,13 +330,13 @@ public class FlightController {
               if ((degrees > 355 && degrees < 360) || (degrees > 0 && degrees < 5)) {
                 humanCoords.add(new double[] {fc.gps.getValues()[0] + dis, fc.gps.getValues()[2]});
                 System.out
-                    .println("Coords from detectd humans: " + fc.gps.getValues()[0] + dis + " z =" + fc.gps.getValues()[2]);
+                    .println("Coords from detectd humans: " + (fc.gps.getValues()[0] + dis) + " z =" + fc.gps.getValues()[2]);
               }
 
               if (degrees > 85 && degrees < 95) {
                 humanCoords.add(new double[] {fc.gps.getValues()[0], fc.gps.getValues()[2]+dis});
                 System.out
-                    .println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + fc.gps.getValues()[2] + dis);
+                    .println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + (fc.gps.getValues()[2] + dis));
               }
               if ((degrees > 265 && degrees < 275)) {
                 double z = fc.gps.getValues()[2];

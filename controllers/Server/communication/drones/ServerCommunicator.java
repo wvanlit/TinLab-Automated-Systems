@@ -112,6 +112,7 @@ public class ServerCommunicator {
                return new ReachedTargetCommand(Integer.parseInt(channel), Boolean.parseBoolean(parameters[2]));
             case "found_person":
                 // Person is at XYZ doubles
+                System.out.println("[    SERVER    ]  "+command);
                 return new PersonFoundCommand(Integer.parseInt(channel),Double.parseDouble(parameters[2]),Double.parseDouble(parameters[3]),Double.parseDouble(parameters[4]));
             default:
                 System.out.println("Unknown command received: '" + command + "'");
