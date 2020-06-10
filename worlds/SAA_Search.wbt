@@ -6,8 +6,8 @@ WorldInfo {
   }
 }
 Viewpoint {
-  orientation -0.3939289590774229 -0.8599167709986028 -0.3245968609760643 1.600663179170283
-  position -22.65103107652859 41.256369570463185 8.132937904074064
+  orientation -0.1311234514988412 -0.9293231969746635 -0.34520289111162106 2.532811869880069
+  position -69.43744238687478 103.68347733079139 -78.89858659934683
 }
 Robot {
   translation 6.1 9 14.58
@@ -25,7 +25,7 @@ Robot {
     Receiver {
     }
     Emitter {
-      channel 1
+      channel 2
     }
   ]
   name "SearchServer"
@@ -285,6 +285,19 @@ Drone {
   translation 26.6 0.15 2
   controllerArgs "search"
   channel 1
+  bodySlot [
+    RobotisLds01 {
+      translation -0.05 0 -0.07
+      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
+      enablePhysics FALSE
+    }
+  ]
+}
+Drone {
+  translation -37 0.15 20
+  name "Drone(1)"
+  controllerArgs "search"
+  channel 2
   bodySlot [
     RobotisLds01 {
       translation -0.05 0 -0.07

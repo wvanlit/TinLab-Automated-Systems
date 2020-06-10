@@ -114,7 +114,7 @@ public class SearchServer implements IServer {
             //check if coords already exist as a marked group
             boolean isDuplicate = false;
             for (Vector3Double vector : groupCoords) {
-                    if(coordsAreClose(avgXCoord, vector.getX(), avgZCoord, vector.getZ(), 10)){
+                    if(coordsAreClose(avgXCoord, vector.getX(), avgZCoord, vector.getZ(), 12)){
                     isDuplicate = true;
                     break;
                 }

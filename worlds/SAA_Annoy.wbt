@@ -8,7 +8,8 @@ WorldInfo {
 Viewpoint {
   orientation -0.3939289590774229 -0.8599167709986028 -0.3245968609760643 1.600663179170283
   position -10.437948994160845 32.575807391654976 1.9347657770939697
-  follow "Drone(4)"
+  follow "Drone(2)"
+  followType "None"
 }
 Robot {
   translation 6 9 16.17
@@ -33,29 +34,6 @@ Robot {
   name "AnnoyServer"
   controller "Server"
   controllerArgs "annoy 6001 6000"
-}
-Robot {
-  translation 6.1 9 14.58
-  children [
-    Shape {
-      appearance Appearance {
-        material Material {
-          diffuseColor 1 0 0
-        }
-      }
-      geometry Box {
-        size 1 1 1
-      }
-    }
-    Receiver {
-    }
-    Emitter {
-      channel 1
-    }
-  ]
-  name "SearchServer"
-  controller "Server"
-  controllerArgs "search 6000 6001"
 }
 TexturedBackground {
 }
@@ -305,18 +283,6 @@ Pedestrian {
   rotation 0 1 0 -1.5707953071795862
   name "pedestrian(7)"
   shirtColor 0.8 0.2 0.2
-}
-Drone {
-  translation 26.6 0.15 2
-  controllerArgs "search"
-  channel 1
-  bodySlot [
-    RobotisLds01 {
-      translation -0.05 0 -0.07
-      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
-      enablePhysics FALSE
-    }
-  ]
 }
 Drone {
   translation 26.8 0.15 -3
