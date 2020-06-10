@@ -9,17 +9,17 @@ selectionDisabled: 0
 viewpointLocked: 0
 orthographicViewHeight: 1
 textFiles: 0 "controllers/Drone/Drone.java" "controllers/Server/Server.java"
-renderingDevicePerspectives: Drone(1):camera;1;0.545605;0;0
 renderingDevicePerspectives: Drone(2):camera;1;0.55058;0;0.497402
-renderingDevicePerspectives: Annoy Drone(2):camera;0;0.470978;0;0
-renderingDevicePerspectives: Drone:camera;1;0.547264;0;0.251114
-renderingDevicePerspectives: Drone(1):display;0;0.470978;0;0
-renderingDevicePerspectives: Drone:display;0;0.470978;0;0
-renderingDevicePerspectives: Annoy Drone(2):display;0;0.470978;0;0
+renderingDevicePerspectives: Drone(4):display;0;1;0;0
 renderingDevicePerspectives: Annoy Drone(1):display;0;0.470978;0;0
 renderingDevicePerspectives: Annoy Drone(1):camera;0;0.470978;0;0
-renderingDevicePerspectives: Drone(2):display;0;0.470978;0;0
-renderingDevicePerspectives: Drone(4):display;0;1;0;0
-renderingDevicePerspectives: Drone(4):camera;1;0.547264;0;0
 renderingDevicePerspectives: Drone(3):display;0;0.470978;0;0
+renderingDevicePerspectives: Drone(1):camera;1;0.545605;0;0
+renderingDevicePerspectives: Drone(1):display;0;0.470978;0;0
+renderingDevicePerspectives: Drone(4):camera;1;0.547264;0;0
+renderingDevicePerspectives: Drone(2):display;0;0.470978;0;0
+renderingDevicePerspectives: Annoy Drone(2):display;0;0.470978;0;0
+renderingDevicePerspectives: Drone:display;0;0.470978;0;0
+renderingDevicePerspectives: Drone:camera;1;0.547264;0;0.251114
+renderingDevicePerspectives: Annoy Drone(2):camera;0;0.470978;0;0
 renderingDevicePerspectives: Drone(3):camera;1;0.55058;0;0.746394

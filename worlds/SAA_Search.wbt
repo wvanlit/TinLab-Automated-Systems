@@ -6,59 +6,8 @@ WorldInfo {
   }
 }
 Viewpoint {
-  orientation 0.07020354259791713 -0.9829244605890901 -0.17009105615037123 3.972131400883808
-  position 10.43957629099063 13.218114074636995 11.57805125934724
-  follow "Drone"
-  followType "Mounted Shot"
-}
-TexturedBackground {
-}
-TexturedBackgroundLight {
-}
-Robot {
-  translation 6 9 16.17
-  children [
-    Shape {
-      appearance Appearance {
-        material Material {
-          diffuseColor 0 1 0
-        }
-      }
-      geometry Box {
-        size 1 1 1
-      }
-    }
-    Receiver {
-      channel 100
-    }
-    Emitter {
-      channel 104
-    }
-  ]
-  name "AnnoyServer"
-  controller "Server"
-  controllerArgs "annoy 6001 6000"
-}
-Drone {
-  translation 4.40666 9.79667 16.0657
-  rotation 0.9998000983271313 0.019865801953737872 0.0022612602223876866 -1.5905453071795863
-  controller "FlightController"
-  controllerArgs "annoy"
-  channel 101
-  bodySlot [
-    RobotisLds01 {
-      translation -0.05 0 -0.07
-      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
-      enablePhysics FALSE
-    }
-  ]
-}
-Drone {
-  translation 4.479212241688226 9.870549655917143 16.79742791370716
-  rotation 0.9997628741622356 0.016405812593594905 0.014319384065296677 -1.5710930387203454
-  name "Drone(2)"
-  controllerArgs "annoy"
-  channel 102
+  orientation -0.3939289590774229 -0.8599167709986028 -0.3245968609760643 1.600663179170283
+  position -22.65103107652859 41.256369570463185 8.132937904074064
 }
 Robot {
   translation 6.1 9 14.58
@@ -76,24 +25,22 @@ Robot {
     Receiver {
     }
     Emitter {
-      channel 4
+      channel 1
     }
   ]
   name "SearchServer"
   controller "Server"
   controllerArgs "search 6000 6001"
 }
-Drone {
-  translation 4.169843500105031 9.87055887829218 14.609990472807048
-  rotation -0.9999987611326099 -0.0011166916744324543 0.0011093840408177898 1.5708202285588933
-  name "Drone(1)"
-  controllerArgs "search"
-  channel 1
+TexturedBackground {
+}
+TexturedBackgroundLight {
+  castShadows FALSE
 }
 Group {
   children [
     BigSassafras {
-      translation 28.21 0 -13.78
+      translation 30.88 0 -13.78
     }
     BigSassafras {
       translation 43.44 0 -9.06
@@ -102,10 +49,6 @@ Group {
     BigSassafras {
       translation 28.21 0 9.65
       name "sassafras tree(1)"
-    }
-    BigSassafras {
-      translation 37.74 0 12.07
-      name "sassafras tree(2)"
     }
     BigSassafras {
       translation 28.21 0 19.88
@@ -124,7 +67,7 @@ Group {
       name "sassafras tree(5)"
     }
     BigSassafras {
-      translation 28.21 0 -28
+      translation 28.21 -0.62 -28
       name "sassafras tree(6)"
     }
     BigSassafras {
@@ -250,25 +193,19 @@ Group {
 Group {
 }
 Pedestrian {
-  translation 22.61 1.65 0.88
-  rotation 0 1 0 3.14159
-  name "pedestrian(1)"
-  shirtColor 1 0.55 0.2
-}
-Pedestrian {
-  translation 10.8 1.65 24.46
+  translation 9.71 1.65 24.46
   rotation 0 -1 0 -1.5707953071795862
   name "pedestrian(2)"
   shirtColor 0 0.4 0.2
 }
 Pedestrian {
-  translation 11.7749 1.65 23.7935
+  translation 12.2599 1.65 22.9532
   rotation -1.91796e-08 1 -7.15791e-08 -0.523595307179586
   name "pedestrian(3)"
   shirtColor 0.6 0.1 0.2
 }
 Pedestrian {
-  translation 11.7985 1.65 24.7161
+  translation 12.4274 1.65 25.345
   rotation 1.91794e-08 -1 7.94437e-09 2.35619
   name "pedestrian(4)"
   shirtColor 0.5 0.8 0.2
@@ -281,30 +218,6 @@ Pedestrian {
 }
 Pedestrian {
   translation 22.61 1.65 -0.01
-}
-Pedestrian {
-  translation 0.928707 8.84 -24.3197
-  rotation 0.47690389062282057 -0.621514857456516 -0.6215158574562867 -2.2515953071795867
-  name "pedestrian(19)"
-  shirtColor 0.25 0 0.2
-}
-Pedestrian {
-  translation 3.50689 8.84 -23.3875
-  rotation 0.18615798143176612 0.6947469307028182 0.6947459307029179 -2.773485307179586
-  name "pedestrian(20)"
-  shirtColor 0 0 0
-}
-Pedestrian {
-  translation 4.05383 8.84 -25.6932
-  rotation -0.7745990533427656 -0.44721303079732644 -0.4472100307971198 1.82347
-  name "pedestrian(21)"
-  shirtColor 1 1 1
-}
-Pedestrian {
-  translation 1.65503 8.84 -26.3213
-  rotation -0.9351111289621199 0.250564034555539 0.25056903455622853 1.63784
-  name "pedestrian(22)"
-  shirtColor 1 1 0.2
 }
 Pedestrian {
   translation 22.71 1.44 -39.87
@@ -339,7 +252,7 @@ Pedestrian {
   pantsColor 0 0 0
 }
 Pedestrian {
-  translation 22.71 1.65 24.61
+  translation 14.19 1.65 -13.28
   rotation 0 1 0 -1.5707953071795862
   name "pedestrian(6)"
   shirtColor 1 0.55 1
@@ -368,20 +281,15 @@ Pedestrian {
   name "pedestrian(7)"
   shirtColor 0.8 0.2 0.2
 }
-Pedestrian {
-  translation 37.3006 0.101057 1.4
-  rotation -0.5773502691896258 -0.5773502691896258 -0.5773502691896258 2.09439
-  name "pedestrian(8)"
-}
-Pedestrian {
-  translation 37.6627 0.15227 0.586233
-  rotation 0.3660720349137559 0.6530080622799939 0.6630020632331617 -2.3499753071795864
-  name "pedestrian(9)"
-  shirtColor 0.25 0.55 0.5
-}
-Pedestrian {
-  translation 37.563 0.156527 2.29977
-  rotation 0.7712351212308438 0.5037870791905491 0.389095061162052 -1.8704853071795862
-  name "pedestrian(10)"
-  shirtColor 0.5 0.55 0.2
+Drone {
+  translation 26.6 0.15 2
+  controllerArgs "search"
+  channel 1
+  bodySlot [
+    RobotisLds01 {
+      translation -0.05 0 -0.07
+      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
+      enablePhysics FALSE
+    }
+  ]
 }
