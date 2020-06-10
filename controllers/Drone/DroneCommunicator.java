@@ -59,7 +59,7 @@ public class DroneCommunicator {
                 return new LocationCommand(Double.parseDouble(parameters[1]),Double.parseDouble(parameters[2]),Double.parseDouble(parameters[3]));
             case "hover":
                 // True / False
-                return new HoverCommand(Boolean.parseBoolean(parameters[1]));
+                return new HoverCommand(Boolean.parseBoolean(parameters[1]), Double.parseDouble(parameters[2]));
             default:
                 System.out.println("Unknown command received: '" + command + "'");
                 return null;

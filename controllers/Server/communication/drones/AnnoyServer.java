@@ -21,6 +21,7 @@ public class AnnoyServer implements IServer {
     List<Integer> DroneIDs;
     List<DroneData> droneDataList;
     Map<Integer, Vector3Double> droneTaskMap;
+    static double hoverHeight = 5;
 
     public AnnoyServer(ServerData s) {
         server = s;
@@ -36,6 +37,14 @@ public class AnnoyServer implements IServer {
             System.out.print(id + ", ");
             droneTaskMap.put(id, null);
         }
+        /* Test Set
+        int channel = 101;
+        Vector3Double testVec = new Vector3Double();
+        testVec.setX(20.464902502136635);
+        testVec.setY(14.84659145219382);
+        testVec.setZ(29.914890404862888);
+        droneTaskMap.put(channel, testVec);*/
+        
         System.out.println(" Total Length: "+DroneIDs.size());
     }
 
@@ -60,11 +69,16 @@ public class AnnoyServer implements IServer {
         }
         for (Map.Entry<Integer,Vector3Double> entry : droneTaskMap.entrySet()) {
             if(entry.getValue() == null){
-                communicator.SendHover(entry.getKey(), true);
+                communicator.SendHover(entry.getKey(), true, 5.0);
             } else {
                 Vector3Double tempVec = entry.getValue();
-                communicator.SendHover(entry.getKey(), false);
-                communicator.SendGoToLocation(entry.getKey(), tempVec.getX(), tempVec.getY(), tempVec.getZ());
+                Vector3Double dronelocation = GetDroneLocation(entry.getKey());
+                if (Math.abs(tempVec.getX() - dronelocation.getX()) < 1 && Math.abs(tempVec.getZ() - dronelocation.getZ()) < 1) {
+                    communicator.SendHover(entry.getKey(), true, hoverHeight);
+                } else {
+                    communicator.SendHover(entry.getKey(), false, tempVec.getY());
+                    communicator.SendGoToLocation(entry.getKey(), tempVec.getX(), tempVec.getY(), tempVec.getZ());
+                }
             }
         }
     }
@@ -84,6 +98,15 @@ public class AnnoyServer implements IServer {
             drone.SetDroneLocation(location);
             break;
         }
+    }
+
+    public Vector3Double GetDroneLocation(int channel) {
+        for (DroneData drone : droneDataList) {
+            if (drone.channel != channel)
+                continue;
+            return drone.location;
+        }
+        return null;
     }
 
     public void HandleDisData(EntityStatePdu[] list){

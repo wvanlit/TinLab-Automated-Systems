@@ -85,9 +85,9 @@ public class ServerCommunicator {
         emitter.send(s.getBytes());
     }
 
-    public void SendHover(int channel, boolean b){
+    public void SendHover(int channel, boolean b, double targetY){
         emitter.setChannel(channel);
-        String s = "hover|"+b;
+        String s = "hover|"+b+"|"+targetY;
         emitter.send(s.getBytes());
     }
 

@@ -6,10 +6,9 @@ WorldInfo {
   }
 }
 Viewpoint {
-  orientation 0.011766366548822207 0.9920277721346903 -0.12546892815243862 3.1500816593558736
-  position 18.968574585782296 16.95536373721326 10.14227233883149
-  follow "Drone"
-  followType "Mounted Shot"
+  orientation -0.3939289590774229 -0.8599167709986028 -0.3245968609760643 1.600663179170283
+  position -10.422634188877382 32.7013874391054 0.9887656365173987
+  follow "Drone(4)"
 }
 Robot {
   translation 6 9 16.17
@@ -66,7 +65,7 @@ TexturedBackgroundLight {
 Group {
   children [
     BigSassafras {
-      translation 28.21 0 -13.78
+      translation 30.88 0 -13.78
     }
     BigSassafras {
       translation 43.44 0 -9.06
@@ -93,7 +92,7 @@ Group {
       name "sassafras tree(5)"
     }
     BigSassafras {
-      translation 28.21 0 -28
+      translation 28.21 -0.62 -28
       name "sassafras tree(6)"
     }
     BigSassafras {
@@ -219,12 +218,6 @@ Group {
 Group {
 }
 Pedestrian {
-  translation 19.0301 17.4684 11.7171
-  rotation -1 9.94356e-07 -4.11874e-07 -0.7854053071795866
-  name "pedestrian(1)"
-  shirtColor 1 0.55 0.2
-}
-Pedestrian {
   translation 9.71 1.65 24.46
   rotation 0 -1 0 -1.5707953071795862
   name "pedestrian(2)"
@@ -326,10 +319,10 @@ Drone {
   ]
 }
 Drone {
-  translation 26.7 0.15 -1
-  name "Drone(1)"
+  translation 26.8 0.15 -3
+  name "Drone(2)"
   controllerArgs "annoy"
-  channel 101
+  channel 102
   bodySlot [
     RobotisLds01 {
       translation -0.05 0 -0.07
@@ -339,10 +332,10 @@ Drone {
   ]
 }
 Drone {
-  translation 26.8 0.15 -3
-  name "Drone(2)"
+  translation 26.5 0.15 -1
+  name "Drone(4)"
   controllerArgs "annoy"
-  channel 102
+  channel 101
   bodySlot [
     RobotisLds01 {
       translation -0.05 0 -0.07

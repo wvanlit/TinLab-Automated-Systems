@@ -638,7 +638,8 @@ public class FlightController {
 
   }
 
-  public void ToggleHoverDrone(boolean mustHover) {
+  public void ToggleHoverDrone(boolean mustHover, double targetY) {
+    // targetAltitude = targetY;
     if (mustHover) {
       if (!hover) {
         hover = true;
@@ -646,14 +647,15 @@ public class FlightController {
         targetXZ[1] = gps.getValues()[2];
       }
       double xDiff = gps.getValues()[0] - targetXZ[0];
-      double yDiff = gps.getValues()[2] - targetXZ[1];
+      double zDiff = gps.getValues()[2] - targetXZ[1];
       double bearingDiff;
       if (getBearingInDegrees() > 180) {
         bearingDiff = (getBearingInDegrees() - 360);
       } else {
         bearingDiff = getBearingInDegrees();
       }
-      FlyDrone(yDiff, -xDiff, 0.1 * bearingDiff / 10);
+      FlyDrone(zDiff, -xDiff, 0.1 * bearingDiff / 10);
+      // 0.1 * bearingDiff / 10000
     } else {
       hover = false;
     }

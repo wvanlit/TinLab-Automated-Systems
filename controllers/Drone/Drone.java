@@ -30,6 +30,7 @@ public class Drone {
 
         //Targets
         LocationCommand lc = null;
+        HoverCommand hc = new HoverCommand(false, 5);
         boolean mustHover = false;
 
         // Get type
@@ -65,16 +66,22 @@ public class Drone {
                 // System.out.println("Nothing to detect "+ e);
                 }
             }
+            
             if (time < 5) {
                 fc.FlyDrone(0, 0, 0);
-            } else if (lc != null && !mustHover){
+            } else if (lc != null && !hc.isB()){
                 // System.out.print("Coords: ");
                 // System.out.print(lc.getX());
                 // System.out.print("   ");
                 // System.out.println(lc.getZ());
+                fc.ToggleHoverDrone(false, hc.getY());
                 fc.FlyDroneToLocation(lc.getX(), lc.getY(), lc.getZ());
-            } else {
-                fc.ToggleHoverDrone(mustHover);
+            } else if(lc == null){
+                fc.ToggleHoverDrone(true, hc.getY());
+            } 
+            else{
+                fc.ToggleHoverDrone(false, hc.getY());
+                fc.FlyDroneToLocation(lc.getX(), hc.getY(), lc.getZ());                
             }
             
             List<ICommand> commandList = dc.HandleIncomingData();
@@ -86,8 +93,7 @@ public class Drone {
 
                 switch (command.getType()) {
                     case HOVER:
-                        HoverCommand hc = (HoverCommand) command;
-                        mustHover = hc.isB();
+                        hc = (HoverCommand) command;              
                         break;
                     case LOCATION:
                         lc = (LocationCommand) command;
