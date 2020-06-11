@@ -81,7 +81,6 @@ public class ServerCommunicator {
     public void SendGoToLocation(int channel, double x, double y, double z){
         emitter.setChannel(channel);
         String s = "location|"+x+"|"+y+"|"+z;
-        // System.out.println(s);
         emitter.send(s.getBytes());
     }
 

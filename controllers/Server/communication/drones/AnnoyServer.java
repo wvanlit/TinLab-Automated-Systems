@@ -36,15 +36,7 @@ public class AnnoyServer implements IServer {
         for (int id : DroneIDs) {
             System.out.print(id + ", ");
             droneTaskMap.put(id, null);
-        }
-        /* Test Set
-        int channel = 101;
-        Vector3Double testVec = new Vector3Double();
-        testVec.setX(20.464902502136635);
-        testVec.setY(14.84659145219382);
-        testVec.setZ(29.914890404862888);
-        droneTaskMap.put(channel, testVec);*/
-        
+        }        
         System.out.println(" Total Length: "+DroneIDs.size());
     }
 
@@ -59,8 +51,7 @@ public class AnnoyServer implements IServer {
                     break;
                 case PERSON_FOUND:
                     PersonFoundCommand pfc = (PersonFoundCommand) command;
-                    // Why tf does annoy server get this?
-                    throw new IllegalStateException("Fix your environment if you get this");
+                    throw new IllegalStateException("[EXCEPTION] YOUR ENVIRONMENT IS BROKEN");
                 case TARGET_REACHED:
                     ReachedTargetCommand rtc = (ReachedTargetCommand) command;
                     // do something I guess idk

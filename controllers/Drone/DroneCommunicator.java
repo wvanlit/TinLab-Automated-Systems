@@ -34,7 +34,6 @@ public class DroneCommunicator {
         while (receiver.getQueueLength() > 0) {
 
             String data = new String(receiver.getData());
-            // System.out.println(data);
 
             if (isFromServer(data))
                 data = trimIdentifier(data);
@@ -49,7 +48,6 @@ public class DroneCommunicator {
     }
 
     private ICommand handleCommand(String command, String[] parameters) {
-        // System.out.println(command);
         switch (command) {
             case "type":
                 sendToServer(type);

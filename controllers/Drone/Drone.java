@@ -56,7 +56,6 @@ public class Drone {
 
             if (time % 0.5 < 0.01) {
                 try {
-                    // fc.ReturnCoordsOfDetectedHumans(display, cam, fc);
                     if(type.equals("search")){
                         for (double[] humanCoord : fc.ReturnCoordsOfDetectedHumans(display, cam, fc)) {
                             dc.SendPersonFound(humanCoord[0], fc.getCurrentLocation()[1], humanCoord[1]);  
@@ -70,10 +69,6 @@ public class Drone {
             if (time < 5) {
                 fc.FlyDrone(0, 0, 0);
             } else if (lc != null && !hc.isB()){
-                // System.out.print("Coords: ");
-                // System.out.print(lc.getX());
-                // System.out.print("   ");
-                // System.out.println(lc.getZ());
                 fc.ToggleHoverDrone(false, hc.getY());
                 fc.FlyDroneToLocation(lc.getX(), lc.getY(), lc.getZ());
             } else if(lc == null){
@@ -97,25 +92,19 @@ public class Drone {
                         break;
                     case LOCATION:
                         lc = (LocationCommand) command;
-                        // System.out.println(lc.getX() + " " +  lc.getY() + " " + lc.getZ());
                         break;
                     default:
                         throw new IllegalArgumentException();
                 }
             }
 
-            // Enter here functions to send actuator commands, like:
             if (!speaker.isSpeaking() && type.equals("annoy"))
-                speaker.speak("Fuck off and go home, you bloody idiots", 0.1);
-
-            drone.doSomething(); // Example function
+                speaker.speak("Please return to your homes", 0.5);
+                
             double[] currentLocation = fc.getCurrentLocation();
-            dc.SendLocationToServer(currentLocation[0], currentLocation[1], currentLocation[2]); // TODO Make this work plz, thank you
-                                                                                                 // You're welcome
+            dc.SendLocationToServer(currentLocation[0], currentLocation[1], currentLocation[2]);
 
         }
-
-        // Enter here exit cleanup code.
     }
 
 

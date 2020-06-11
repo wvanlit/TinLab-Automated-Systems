@@ -61,7 +61,6 @@ public class Server {
             EntityStatePdu[] pduArray = new EntityStatePdu[pduList.size()];
             pduArray = pduList.toArray(pduArray);
             server.HandleDisData(pduArray);
-            // printPduInformation(type, pduList);
         }
     }
 
@@ -75,7 +74,7 @@ public class Server {
                 server = new SearchServer(sd);
                 break;
             default:
-                throw new IllegalArgumentException("Server Input Invalid");
+                throw new IllegalArgumentException("[EXCEPTION] SERVER INPUT INVALID");
         }
         return server;
     }

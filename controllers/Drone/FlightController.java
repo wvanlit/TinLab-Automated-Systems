@@ -161,70 +161,6 @@ public class FlightController {
     objectAvoidanceMap.put(turnObstacleDirectionsToInt(false, true, true, true), new double[]{0.0, 0.0}); // Ahead
     objectAvoidanceMap.put(turnObstacleDirectionsToInt(true, true, true, true), new double[]{-1.0, 0.0}); // Blocked
   }
-/*
-  public static void main(String[] args) {
-    Robot robot = new Robot();
-    int tempTimeStep = (int) Math.round(robot.getBasicTimeStep());
-
-    FlightController fc = new FlightController(robot, tempTimeStep);
-    fc.initYolo();
-
-    Camera camera = robot.getCamera("camera");
-    camera.enable(fc.timeStep);
-
-    Display display = robot.getDisplay("display");
-    display.attachCamera(camera);
-    // Main loop:
-    // - perform simulation steps until Webots is stopping the controller
-    while (fc.robot.step(fc.timeStep) != -1) {
-      time = fc.robot.getTime(); // In seconds
-
-      if (time % 0.5 < 0.01) {
-        try {
-
-          // fc.ReturnCoordsOfDetectedHumans(display, camera, fc);
-        } catch (Exception e) {
-          // System.out.println("Nothing to detect "+ e);
-        }
-      }
-
-      // Disturbances, used to control the drone path
-      double rollDisturbance = 0.0;
-      double pitchDisturbance = 0.0;
-      double yawDisturbance = 0.0;
-
-      if (time < 5) {
-        fc.FlyDrone(0, 0, 0);
-      } else {
-        /*
-         * // voor integratie met de servers // Get new target if available double[]
-         * targets = fc.getTargets(); // Fly to target written in targetXZ boolean
-         * targetReached = fc.FlyDroneToLocation(targets[0], 20, targets[1]); // Hover
-         * drone if targetReached if (targetReached){ fc.ToggleHoverDrone(true);
-         * fc.targetReached(); } else { fc.ToggleHoverDrone(false); }
-         */
-        /* Test Set 
-        if (!targetOne) {
-          targetOne = fc.FlyDroneToLocation(45, 15, 30);
-          // targetOne = true;
-        } else if (!targetTwo) {
-          targetTwo = fc.FlyDroneToLocation(-45, 15, 30);
-        } else if (!targetThree) {
-          targetThree = fc.FlyDroneToLocation(-40, 15, -40);
-        } else if (!targetFour) {
-          targetFour = fc.FlyDroneToLocation(40, 15, -40);
-        } else {
-          // fc.ToggleHoverDrone(true);
-          targetOne = false;
-          targetTwo = false;
-          targetThree = false;
-          targetFour = false;
-        }
-        // 
-      }
-    }
-  }
-  */
 
   public void initYolo() {
     // Load the openCV 3 dll //
@@ -316,33 +252,22 @@ public class FlightController {
               clsIds.add((int) classIdPoint.x);
               confs.add(confidence);
               rects.add(new Rect2d(left, top, width, height));
-
-              // System.out.println("distance= " + dis);
-
               int degrees = (int) getBearingInDegrees();
-              // System.out.println("Degrees Drone: " + degrees);
               if (degrees > 175 && degrees < 182) {
                 double x = fc.gps.getValues()[0];
                 double newX = x - dis;
-                // System.out.println("Coords from detectd humans: " + newX + " z =" + fc.gps.getValues()[2]);
                 humanCoords.add(new double[] {newX, fc.gps.getValues()[2]});
               }
               if ((degrees > 355 && degrees < 360) || (degrees > 0 && degrees < 5)) {
                 humanCoords.add(new double[] {fc.gps.getValues()[0] + dis, fc.gps.getValues()[2]});
-                // System.out
-                    // .println("Coords from detectd humans: " + (fc.gps.getValues()[0] + dis) + " z =" + fc.gps.getValues()[2]);
               }
-
               if (degrees > 85 && degrees < 95) {
                 humanCoords.add(new double[] {fc.gps.getValues()[0], fc.gps.getValues()[2]+dis});
-                // System.out
-                    // .println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + (fc.gps.getValues()[2] + dis));
               }
               if ((degrees > 265 && degrees < 275)) {
                 double z = fc.gps.getValues()[2];
                 double newZ = z - dis;
                 humanCoords.add(new double[] {fc.gps.getValues()[0], newZ});
-                // System.out.println("Coords from detectd humans: " + fc.gps.getValues()[0] + " z =" + newZ);
               }
             }
           }
@@ -365,30 +290,9 @@ public class FlightController {
       int idx = ind[i];
       Rect2d box = boxesArray[idx];
       Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 0, 255), 2);
-      // System.out.println("coordinaten "+ box.width + " " + box.height);
     }
     detectionCount++;
-    // Save result to file
-    // Imgcodecs.imwrite("detected" + detectionCount + ".jpg", frame); 
-    
-
     return humanCoords;
-    
-    /*
-     * Output conversion for webots
-     * 
-     * MatOfInt rgb = new MatOfInt(CvType.CV_32SC3); frame.convertTo(rgb,
-     * CvType.CV_32SC3); int[] processedImage = new
-     * int[(int)(rgb.total()*rgb.channels())]; rgb.get(0,0,processedImage); ImageRef
-     * ir = display.imageNew(camera.getWidth(), camera.getHeight(),
-     * processedImage,3); display.imageSave(ir, "test1234.png");
-     * System.out.println("saved");
-     */
-  }
-
-  private void SendCoordinatesToServer(int _bodyCount, GPS _gps) {
-    System.out.println("Coordinates: " + _gps.getValues()[0] + " - " + _gps.getValues()[1] + " - " + _gps.getValues()[2]);
-    System.out.println(_bodyCount + " Persons detected");
   }
 
   // convert camera image to opencv standard
@@ -639,7 +543,6 @@ public class FlightController {
   }
 
   public void ToggleHoverDrone(boolean mustHover, double targetY) {
-    // targetAltitude = targetY;
     if (mustHover) {
       if (!hover) {
         hover = true;
@@ -655,7 +558,6 @@ public class FlightController {
         bearingDiff = getBearingInDegrees();
       }
       FlyDrone(zDiff, -xDiff, 0.1 * bearingDiff / 10);
-      // 0.1 * bearingDiff / 10000
     } else {
       hover = false;
     }
@@ -719,7 +621,6 @@ public class FlightController {
       return new double[] { 4.0, 0.0 };
     } else {
       int obstacleDirection = turnObstacleDirectionsToInt(ahead, behind, left, right);
-      // System.out.println(obstacleDirection);
       return objectAvoidanceMap.get(obstacleDirection);
     }
   }

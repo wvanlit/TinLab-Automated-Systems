@@ -66,7 +66,7 @@ public class SearchServer implements IServer {
                     break;
                 case PERSON_FOUND:
                     PersonFoundCommand pfc = (PersonFoundCommand) command;
-                    // Make some kind of Person Found list or smthing
+                    // Make some kind of Person Found list
                     int droneChannel = pfc.getChannel();
                     // Check if channel is in map and has a list associated with it
                     if(!personsFoundMap.containsKey(droneChannel)){
@@ -78,7 +78,6 @@ public class SearchServer implements IServer {
                     break;
                 case TARGET_REACHED:
                     ReachedTargetCommand rtc = (ReachedTargetCommand) command;
-                    // do something I guess idk
                     break;
             }
         }
@@ -152,13 +151,9 @@ public class SearchServer implements IServer {
     }
     
     public void HandleDisData(EntityStatePdu[] list){
-        // System.out.println("[Search] Shouldnt be here");
     }
 
     public List<Vector3Double> GetGroupCoords(){
-        // for (Vector3Double vec : groupCoords) {
-        //     System.out.println("X: " + vec.getX() + " Z: " + vec.getZ());
-        // }
         return recentlyFoundGroupCoords;
     }
 }

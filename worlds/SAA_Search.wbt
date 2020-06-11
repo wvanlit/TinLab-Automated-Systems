@@ -6,8 +6,8 @@ WorldInfo {
   }
 }
 Viewpoint {
-  orientation -0.1311234514988412 -0.9293231969746635 -0.34520289111162106 2.532811869880069
-  position -69.43744238687478 103.68347733079139 -78.89858659934683
+  orientation -0.2901840917840891 -0.8973451611070427 -0.3325129391666122 1.8843462676476184
+  position -102.07442825885727 92.10663867821128 -22.7811811903302
 }
 Robot {
   translation 6.1 9 14.58
@@ -258,19 +258,19 @@ Pedestrian {
   shirtColor 1 0.55 1
 }
 Pedestrian {
-  translation -25.01 1.65 24.2
-  rotation 0 1 0 1.01503e-06
+  translation -24.74 1.65 24.53
+  rotation 0 1 0 0.5236
   name "pedestrian(11)"
   shirtColor 1 0.55 1
 }
 Pedestrian {
-  translation -24.37 1.65 24.77
+  translation -23.734 1.65 25.406
   rotation 0 1 0 -2.3561953071795863
   name "pedestrian(12)"
   shirtColor 1 0.55 1
 }
 Pedestrian {
-  translation -25.57 1.65 24.75
+  translation -26.2345 1.65 25.1408
   rotation 0 1 0 1.309
   name "pedestrian(13)"
   shirtColor 1 0.55 1
