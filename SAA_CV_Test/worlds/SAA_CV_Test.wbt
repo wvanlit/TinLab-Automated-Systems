@@ -1,0 +1,48 @@
+#VRML_SIM R2020a utf8
+WorldInfo {
+  basicTimeStep 8
+  defaultDamping Damping {
+    linear 0.5
+    angular 0.5
+  }
+}
+Viewpoint {
+  orientation -0.2425475214404195 0.9398316900732758 0.24059736943100413 1.5616908340719362
+  position 9.78835191682193 4.663399182398208 -0.8550485844848481
+  follow "Annoy Drone"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 10 10
+}
+WoodenBox {
+  translation 0.1 0.89 -2.92
+}
+WoodenBox {
+  translation 0.100743 0.3 -2.91957
+  name "wooden box(1)"
+}
+WoodenBox {
+  translation 0.101 1.4 -2.92
+  name "wooden box(2)"
+}
+AnnoyDrone {
+  hidden position_0_0 -1.3364180817501917e-09
+  hidden translation_7 -0.024492013577010585 -0.013032770431096852 -0.03458889405918164
+  hidden rotation_7 0.9999999990201041 -3.230034438278301e-05 3.027341598886204e-05 1.5010820584819191
+  hidden position_14_0 -3.1192544005858256e-09
+  hidden position_15_0 1.186317680779985e-09
+  translation 0.218139 0.0879546 -0.220346
+  rotation 0.9987863109263546 0.034862317465077695 -0.03479258436919003 -1.5720118618757264
+  controller "FlightController"
+  bodySlot [
+    RobotisLds01 {
+      translation -0.05 0 -0.07
+      rotation -0.5773502691896258 0.5773502691896258 -0.5773502691896258 2.09439
+      enablePhysics FALSE
+    }
+  ]
+}
